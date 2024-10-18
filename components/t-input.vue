@@ -21,13 +21,12 @@ const props = withDefaults(
   },
 );
 
-const { errorMessage, meta, value, ...x } = useField(
+const { errorMessage, meta, value } = useField(
   () => props.name,
   props.rule,
   props.veeOptions,
 );
 
-console.log(meta, x);
 const inputType = computed(() => props.type || "text");
 </script>
 

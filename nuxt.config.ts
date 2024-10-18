@@ -1,13 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
+  appConfig: {
+    appDomain: process.env.APP_DOMAIN,
+    ssl: process.env.APP_SSL,
+  },
   app: {
     head: {
-      title: (t) => {
-        console.log("t", t);
-        return t ? `Task Tracker - ${t}` : "Task Tracker";
-      },
+      title: "Task Tracker",
       meta: [
         { name: "description", content: "Приложение для отслеживания задач" },
       ],
@@ -43,4 +45,5 @@ export default defineNuxtConfig({
       ErrorMessage: "VeeErrorMessage",
     },
   },
+  plugins: ["~/plugins/axios"],
 });

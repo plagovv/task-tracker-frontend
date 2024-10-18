@@ -2,5 +2,7 @@
 import withNuxt from "./.nuxt/eslint.config.mjs";
 
 export default withNuxt().append({
-  rules: { "vue/html-self-closing": "off" },
+  rules: {
+    "vue/html-self-closing": "off",
+  },
 });

@@ -1,18 +1,30 @@
 <script setup lang="ts">
 import { Form } from "vee-validate";
 import { string } from "yup";
+import { useSighIn } from "~/api/useSignIn.api";
 
 definePageMeta({
   layout: "auth",
   title: "Авторизация",
 });
 
-const username = ref(null);
+const { error, loading, signIn } = useSighIn();
+const router = useRouter();
+const route = useRoute();
+
+const username = ref(route.query.username || null);
 const password = ref(null);
 
-const onSubmit = () => {
-  console.log({ username: username.value, password: password.value });
-};
+async function onSubmit() {
+  await signIn({ username: username.value, password: password.value });
+  if (error) {
+    // TODO: Сделать Alerts
+    console.error(error);
+  } else {
+    // TODO: Сохранить токен
+    router.push({ name: "tasks" });
+  }
+}
 </script>
 
 <template>
@@ -22,6 +34,7 @@ const onSubmit = () => {
       name="username"
       label="Имя пользователя"
       :rule="string().required()"
+      :disabled="loading"
     />
     <t-input
       v-model="password"
@@ -29,8 +42,11 @@ const onSubmit = () => {
       label="Пароль"
       type="password"
       :rule="string().required()"
+      :disabled="loading"
     />
-    <t-button class="mt-4 w-full" type="submit"> Вход </t-button>
+    <t-button class="mt-4 w-full" type="submit" :loading="loading">
+      Вход
+    </t-button>
     <t-devider>
       Нет аккаунта? &nbsp;
       <NuxtLink

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Form } from "vee-validate";
 import { string, ref as yupRef } from "yup";
+import { useSignUp } from "~/api/useSignUp.api";
 
 definePageMeta({
   layout: "auth",
@@ -8,42 +9,44 @@ definePageMeta({
   name: "sign-up",
 });
 
+const { error, loading, signUp } = useSignUp();
+const router = useRouter();
+
 const username = ref(null);
 const password = ref(null);
-const passwordConfirm = ref(null);
 
-const refForm = useTemplateRef("formm");
-
-const log = () => {
-  console.log(refForm.value.getMeta());
-};
-
-const onSubmit = () => {
-  console.log({ username: username.value, password: password.value });
-};
+async function onSubmit() {
+  await signUp({ username: username.value, password: password.value });
+  if (error) {
+    console.error(error);
+  } else {
+    router.push({ name: "sign-in", query: { username: username.value } });
+  }
+}
 </script>
 
 <template>
-  <Form id="sign-up" ref="formm" @submit="onSubmit">
+  <Form id="sign-up" @submit="onSubmit">
     <t-input
       v-model="username"
-      name="username"
       label="Имя пользователя"
+      name="username"
+      :disabled="loading"
       :rule="string().required().min(4)"
     />
     <t-input
       v-model="password"
-      name="password"
       label="Пароль"
+      name="password"
       type="password"
+      :disabled="loading"
       :rule="string().required().min(6)"
-      :vee-options="{ label: 'password' }"
     />
     <t-input
-      v-model="passwordConfirm"
-      name="passwordConfirm"
       label="Подтверждение пароля"
+      name="passwordConfirm"
       type="password"
+      :disabled="loading"
       :rule="
         string()
           .required()
@@ -51,8 +54,10 @@ const onSubmit = () => {
           .oneOf([yupRef('$password')])
       "
     />
-    <t-button class="mt-4 w-full" type="submit"> Зарегистрироваться </t-button>
-    <t-devider @click="log">
+    <t-button class="mt-4 w-full" type="submit" :loading="loading">
+      Зарегистрироваться
+    </t-button>
+    <t-devider>
       Есть аккаунт? &nbsp;
       <NuxtLink
         :to="{ name: 'auth' }"
