@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+input:focus {
+    outline-style: none;
+}
+
+.icon-box {
+    background: linear-gradient(theme('colors.slate.900'), theme('colors.slate.900')) padding-box, conic-gradient(theme('colors.slate.400'), theme('colors.slate.700') 25%, theme('colors.slate.700') 75%, theme('colors.slate.400') 100%) border-box;
+}

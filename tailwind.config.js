@@ -9,8 +9,18 @@ export default {
     // "./error.vue",
   ],
   theme: {
-    extend: {},
+    extend: {
+      Zindex: {
+        "-10": "-10",
+      },
+      fontFamily: {
+        body: ["Inter", "sans-serif"],
+        sans: ["Inter"],
+        serif: ["Inter"],
+        mono: ["Inter"],
+        display: ["Inter"],
+      },
+    },
   },
   plugins: [],
-}
-
+};
