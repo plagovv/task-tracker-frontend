@@ -1,13 +1,14 @@
 import { ref } from "vue";
-import { useNuxtApp } from "#app";
+import { type NuxtApp, useNuxtApp } from "#app";
 import type {
   SignInRequest,
   SignInResponse,
 } from "~/api/types/signIn.interface";
-import type RequestError from "~/api/types/error.interface";
+import type { ErrorRequest, RequestError } from "~/api/types/error.interface";
+import { AxiosError as AxiosErrorFromImport } from "axios";
 
 export const useSighIn = () => {
-  const nuxtApp = useNuxtApp();
+  const nuxtApp: NuxtApp = useNuxtApp();
   const data = ref<SignInRequest | null>(null);
   const error = ref<RequestError | null>(null);
   const loading = ref<boolean>(false);
@@ -20,11 +21,14 @@ export const useSighIn = () => {
         args,
       );
       data.value = response.data;
-    } catch (err: import("axios").AxiosError) {
-      error.value = {
-        message: err.response?.data?.message || "Failed to login",
-        code: err.response.status | 0,
-      };
+    } catch (err: unknown) {
+      if (err instanceof AxiosErrorFromImport) {
+        const e: AxiosErrorFromImport<ErrorRequest, SignInResponse> = err;
+        error.value = {
+          message: e.response?.data?.message || "Failed to login",
+          code: e.response?.status || 0,
+        };
+      }
     } finally {
       loading.value = false;
     }

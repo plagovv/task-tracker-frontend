@@ -1,7 +1,12 @@
 import { ref } from "vue";
 import { useNuxtApp } from "#app";
-import type { SignUpRequest } from "~/api/types/signUp.interface";
-import type RequestError from "~/api/types/error.interface";
+import type {
+  SignUpRequest,
+  SignUpResponse,
+} from "~/api/types/signUp.interface";
+import type { ErrorRequest, RequestError } from "~/api/types/error.interface";
+import { AxiosError as AxiosErrorFromImport } from "axios";
+import type { SignInResponse } from "~/api/types/signIn.interface";
 
 export const useSignUp = () => {
   const nuxtApp = useNuxtApp();
@@ -9,7 +14,7 @@ export const useSignUp = () => {
   const error = ref<RequestError | null>(null);
   const loading = ref<boolean>(false);
 
-  const signUp = async (args: SignUpRequest) => {
+  const signUp = async (args: SignUpResponse) => {
     loading.value = true;
     try {
       const response = await nuxtApp.$axios.post<SignUpRequest>(
@@ -17,9 +22,14 @@ export const useSignUp = () => {
         args,
       );
       data.value = response.data;
-    } catch (err: import("axios").AxiosError) {
-      error.value.message = err.response.data.message || "Failed to register";
-      error.value.code = err.response.status | 0;
+    } catch (err: unknown) {
+      if (err instanceof AxiosErrorFromImport) {
+        const e: AxiosErrorFromImport<ErrorRequest, SignInResponse> = err;
+        error.value = {
+          message: e.response?.data?.message || "Failed to register",
+          code: e.response?.status || 0,
+        };
+      }
     } finally {
       loading.value = true;
     }

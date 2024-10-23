@@ -3,5 +3,6 @@ export interface SignInResponse {
   password: string;
 }
 export interface SignInRequest {
-  token: string;
+  accessToken: string;
+  refreshToken: string;
 }

@@ -1,10 +1,10 @@
-import axios, { type AxiosError } from "axios";
+import axios, { type AxiosError, type AxiosInstance } from "axios";
 import { defineNuxtPlugin } from "#app";
 
 export default defineNuxtPlugin((nuxtApp) => {
   const { ssl, appDomain } = useAppConfig();
 
-  const apiClient = axios.create({
+  const apiClient: AxiosInstance = axios.create({
     baseURL: `http${ssl === "true" ? "s" : ""}://${appDomain}`,
   });
 

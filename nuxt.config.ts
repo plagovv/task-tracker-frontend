@@ -21,8 +21,12 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "@nuxtjs/google-fonts",
     "@vee-validate/nuxt",
+    "nuxt-icon-tw",
+    "@pinia/nuxt",
   ],
+  plugins: ["~/plugins/axios"],
   css: ["~/assets/css/main.css"],
+  // Modules Settings
   postcss: {
     plugins: {
       tailwindcss: {},
@@ -45,5 +49,10 @@ export default defineNuxtConfig({
       ErrorMessage: "VeeErrorMessage",
     },
   },
-  plugins: ["~/plugins/axios"],
+  iconTw: {
+    collections: ["material-symbols"],
+  },
+  pinia: {
+    storesDirs: ["./stores/**"],
+  },
 });
