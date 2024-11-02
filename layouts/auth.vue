@@ -3,11 +3,11 @@ const route = useRoute();
 
 watch(
   () => route.meta.title,
-  (title) => useSeoMeta({ title }),
+  (title) => useSeoMeta({ title: title as string }),
 );
 
 useSeoMeta({
-  title: route.meta.title,
+  title: route.meta.title as string,
 });
 </script>
 
@@ -47,7 +47,7 @@ useSeoMeta({
           </h1>
         </div>
         <div class="max-w-6xl mx-auto max-w-sm">
-          <slot />
+          <NuxtPage />
         </div>
       </section>
     </main>

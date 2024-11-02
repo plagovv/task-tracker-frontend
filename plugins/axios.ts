@@ -3,10 +3,16 @@ import { defineNuxtPlugin } from "#app";
 
 export default defineNuxtPlugin((nuxtApp) => {
   const { ssl, appDomain } = useAppConfig();
+  const mainStore = useMainStore();
 
   const apiClient: AxiosInstance = axios.create({
     baseURL: `http${ssl === "true" ? "s" : ""}://${appDomain}`,
   });
+
+  if (mainStore.token) {
+    apiClient.defaults.headers.common["Authorization"] =
+      `Bearer ${mainStore.token}`;
+  }
 
   apiClient.interceptors.response.use(
     (response) => response,

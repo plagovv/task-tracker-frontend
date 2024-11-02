@@ -1,14 +1,10 @@
 <script setup lang="ts">
-const colorMode = useColorMode("light");
+const colorMode = useColorMode();
 colorMode.preference = "dark";
 </script>
 
 <template>
-  <NuxtLayout>
-    <div>
-      <NuxtPage />
-    </div>
-  </NuxtLayout>
+  <NuxtLayout />
 </template>
 
 <style lang="postcss">

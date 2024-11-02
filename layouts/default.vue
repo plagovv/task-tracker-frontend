@@ -1,13 +1,26 @@
 <script setup lang="ts">
+const route = useRoute();
 
+watch(
+  () => route.meta.title,
+  (title) => useSeoMeta({ title: title as string }),
+);
+
+useSeoMeta({
+  title: route.meta.title as string,
+});
+
+const mainState = useMainStore();
 </script>
 
 <template>
   <div class="layout-default">
-    <slot />
+    <NuxtLoadingIndicator style="height: 10px" />
+    <client-only>
+      <div v-if="mainState.globalLoading">Глобальная загрузка...</div>
+      <NuxtPage v-else />
+    </client-only>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

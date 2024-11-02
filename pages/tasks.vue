@@ -1,6 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
   title: "Задачи",
+  layout: "default",
 });
 
 const mainState = useMainStore();
@@ -8,8 +9,14 @@ const mainState = useMainStore();
 
 <template>
   <div>
-    <h1>Привет! Скоро здесь появятся таски! :)</h1>
-    <t-button @click="mainState.logout()"> Выход </t-button>
+    <client-only>
+      <h1>
+        Привет, {{ mainState?.user?.username || "---" }}! Скоро здесь появятся
+        таски! :) ГЛОБ:
+        {{ mainState.globalLoading ? "Загрузка..." : "0" }}
+      </h1>
+      <t-button @click="mainState.logout()"> Выход </t-button>
+    </client-only>
   </div>
 </template>
 
