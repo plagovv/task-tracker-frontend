@@ -6,3 +6,6 @@ export interface SignInRequest {
   accessToken: string;
   refreshToken: string;
 }
+export interface RefreshTokenResponse {
+  refreshToken: string;
+}

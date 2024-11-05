@@ -1,22 +1,66 @@
-import axios, { type AxiosError, type AxiosInstance } from "axios";
+import axios, {
+  type AxiosError,
+  type AxiosInstance,
+  type InternalAxiosRequestConfig,
+} from "axios";
 import { defineNuxtPlugin } from "#app";
+import type { SignInRequest } from "~/api/types/signIn.interface";
+
+interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
+  _retry?: boolean;
+}
 
 export default defineNuxtPlugin((nuxtApp) => {
   const { ssl, appDomain } = useAppConfig();
   const mainStore = useMainStore();
 
-  const apiClient: AxiosInstance = axios.create({
-    baseURL: `http${ssl === "true" ? "s" : ""}://${appDomain}`,
-  });
+  const createNewInstance: () => AxiosInstance = () =>
+    axios.create({
+      baseURL: `http${ssl === "true" ? "s" : ""}://${appDomain}`,
+    });
 
-  if (mainStore.token) {
-    apiClient.defaults.headers.common["Authorization"] =
-      `Bearer ${mainStore.token}`;
-  }
+  const apiClient: AxiosInstance = createNewInstance();
+
+  // if (mainStore.token) {
+  //   apiClient.defaults.headers.common["Authorization"] =
+  //     `Bearer ${mainStore.token}`;
+  // }
+
+  apiClient.interceptors.request.use(
+    (response) => {
+      if (mainStore.token) {
+        response.headers["Authorization"] = `Bearer ${mainStore.token}`;
+      }
+
+      return response;
+    },
+    (error: AxiosError) => {
+      return Promise.reject(error);
+    },
+  );
 
   apiClient.interceptors.response.use(
     (response) => response,
-    (error: AxiosError) => {
+    async (error: AxiosError) => {
+      const originalRequest = error.config as CustomAxiosRequestConfig;
+      if (error.response?.status === 401 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const refreshInstance = createNewInstance();
+          const { data } = await refreshInstance.post<SignInRequest>(
+            "/auth/refresh-token",
+            { refreshToken: mainStore.refreshToken },
+          );
+          mainStore.setAuthData(data);
+          apiClient.defaults.headers.common["Authorization"] =
+            `Bearer ${mainStore.token}`;
+          return apiClient(originalRequest);
+        } catch (refreshError) {
+          console.log("logout from axios err");
+          mainStore.logout();
+          return Promise.reject(refreshError);
+        }
+      }
       // Обработка общей ошибки
       if (error.response) {
         console.error(`Error: ${error.response.status}`);
