@@ -13,10 +13,8 @@ const mainState = useMainStore();
     <client-only>
       <h1>
         Привет, {{ mainState?.user?.username || "---" }}! Скоро здесь появятся
-        таски! :) ГЛОБ:
-        {{ mainState.globalLoading ? "Загрузка..." : "0" }}
+        таски!
       </h1>
-      <t-button @click="mainState.logout()"> Выход </t-button>
     </client-only>
   </div>
 </template>

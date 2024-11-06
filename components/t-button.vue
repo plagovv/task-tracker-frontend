@@ -4,20 +4,36 @@ const props = defineProps({
   size: {}, // TODO: Сделать размер кнопок, пока доступен только md
   disabled: { type: Boolean, default: false },
   loading: { type: Boolean, default: false },
+  outline: { type: Boolean, default: false },
+  rounded: { type: Boolean, default: false },
+  icon: { type: String, default: undefined },
 });
+
+const baseClass = computed(() =>
+  props.outline
+    ? "icon-box border border-transparent text-slate-400 opacity-85"
+    : "bg-purple-500",
+);
 </script>
 
 <template>
   <button
     v-bind="$attrs"
     :disabled="props.disabled"
-    :class="{
-      'opacity-50': disabled,
-      'cursor-not-allowed': disabled || loading,
-      'hover:bg-purple-600 hover:shadow-lg hover:shadow-purple-500/15 hover:duration-250':
-        !disabled && !loading,
-    }"
-    class="mt-1 font-semibold text-center text-white text-sm leading-none px-4 py-2.5 rounded-md bg-purple-500 transition-all ease-in-out duration-150"
+    :class="[
+      {
+        'opacity-50': disabled,
+        'cursor-not-allowed': disabled || loading,
+        'hover:bg-purple-600 hover:shadow-lg hover:shadow-purple-500/15 hover:duration-250':
+          !disabled && !loading && !outline,
+        'hover:text-white hover:opacity-100 hover:duration-250':
+          !disabled && !loading && outline,
+        '!rounded-full': rounded,
+        '!p-2': rounded && icon,
+      },
+      baseClass,
+    ]"
+    class="px-4 py-2.5 font-semibold text-center text-white text-sm leading-none rounded-md transition-all ease-in-out duration-150"
     @click="$emit('click')"
   >
     <template v-if="loading">
@@ -42,6 +58,9 @@ const props = defineProps({
         />
       </svg>
       Загрузка...
+    </template>
+    <template v-else-if="icon">
+      <Icon :icon="icon" size="24px" />
     </template>
     <slot v-else />
   </button>

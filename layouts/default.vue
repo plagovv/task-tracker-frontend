@@ -10,16 +10,14 @@ useSeoMeta({
   title: route.meta.title as string,
 });
 
-const mainState = useMainStore();
+// const mainState = useMainStore();
 </script>
 
 <template>
   <div class="layout-default">
     <NuxtLoadingIndicator style="height: 10px" />
-    <client-only>
-      <div v-if="mainState.globalLoading">Глобальная загрузка...</div>
-      <NuxtPage v-else />
-    </client-only>
+    <t-header />
+    <NuxtPage />
   </div>
 </template>
 

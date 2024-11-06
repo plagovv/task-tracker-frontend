@@ -49,6 +49,7 @@ export const useMainStore = defineStore("main", () => {
   const logout = (redirect: boolean = true) => {
     token.value = undefined;
     refreshToken.value = undefined;
+    user.value = undefined;
     if (redirect) router.push("/");
   };
   const setLoading = (value: boolean) => {
