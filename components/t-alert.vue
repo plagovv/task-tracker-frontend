@@ -1,21 +1,36 @@
 <script setup lang="ts">
 type AlertType = "success" | "info" | "warning" | "danger" | "default";
 
-const textColorVariants: Record<string, string> = {
+interface AlertColorVariants {
+  success: string;
+  warning: string;
+  danger: string;
+  info: string;
+  default: string | "";
+}
+
+const iconColorVariants: AlertColorVariants = {
+  success: "text-green-400",
+  warning: "text-yellow-400",
+  danger: "text-red-400",
+  info: "text-purple-400",
+  default: "",
+};
+const textColorVariants: AlertColorVariants = {
   success: "text-green-500",
   warning: "text-yellow-500",
   danger: "text-red-500",
   info: "text-purple-500",
   default: "",
 };
-const bgColorVariants: Record<string, string> = {
+const bgColorVariants: AlertColorVariants = {
   success: "before:from-green-500/45",
   warning: "before:from-yellow-500/45",
   danger: "before:from-red-500/45",
   info: "before:from-purple-500/45",
   default: "before:from-slate-800/30",
 };
-const iconVariants: Record<string, string> = {
+const iconVariants: AlertColorVariants = {
   success: "material-symbols:check-circle-rounded",
   warning: "material-symbols:error-rounded",
   danger: "material-symbols:cancel-rounded",
@@ -40,15 +55,20 @@ const bgColorClasses = computed(
 const iconName = computed(
   () => iconVariants[props.type] || iconVariants.default,
 );
+const iconColorClasses = computed(
+  () => iconColorVariants[props.type] || iconVariants.default,
+);
 </script>
 
 <template>
   <div
-    class="relative flex items-center px-4 py-2 justify-center border rounded-2xl border-transparent before before:absolute before:inset-0 before:rounded-2xl shadow-2xl icon-box before:bg-gradient-to-r before:to-40% before:to-slate-800/30"
+    class="relative flex items-center pr-4 py-2 justify-center border rounded-2xl border-transparent before before:absolute before:inset-0 before:rounded-2xl shadow-2xl icon-box before:bg-gradient-to-r before:to-40% before:to-slate-800/30"
     :class="[bgColorClasses]"
   >
-    <Icon :icon="iconName" />
-    <div class="w-full">
+    <div class="basis-1/6 text-center" :class="[iconColorClasses]">
+      <Icon :icon="iconName" size="24px" />
+    </div>
+    <div class="basis-5/6">
       <h3 class="font-semibold" :class="[textColorClasses]">
         {{ props.title }}
       </h3>

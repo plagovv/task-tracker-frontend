@@ -2,6 +2,7 @@
 definePageMeta({
   title: "Задачи",
   layout: "default",
+  middleware: ["auth-protect"],
 });
 
 const mainState = useMainStore();

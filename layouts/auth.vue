@@ -12,19 +12,24 @@ useSeoMeta({
 </script>
 
 <template>
-  <div class="dark:bg-state-900 auth-layout min-h-screen flex pt-40 pb-20">
+  <div
+    class="dark:bg-state-900 auth-layout min-h-screen flex flex-col overflow-hidden [@supports(overflow:clip)]:overflow-clip"
+  >
     <main class="grow">
       <section class="relative">
         <div
-          class="block absolute blur-2xl z-[-10] inset-x-0 left-1/2 transform -translate-x-1/2 -mt-36"
+          class="md:block absolute blur-2xl opacity-70 z-[-10] left-1/2 transform -translate-x-1/2 -mt-36 pointer-events-none"
         >
           <img
             src="/image/auth-illustration.svg"
-            alt="Page Illustration"
-            class="src"
+            class="max-w-none"
+            width="1440"
+            height="450"
           />
         </div>
-        <div class="ml-auto mr-auto text-center pb-3 max-w-3xl">
+        <div
+          class="ml-auto mr-auto text-center max-w-3xl pt-32 pb-12 md:pt-40 md:pb-20"
+        >
           <div class="mb-6">
             <a href="" class="inline-flex">
               <div
@@ -46,7 +51,7 @@ useSeoMeta({
             {{ route.meta.title }}
           </h1>
         </div>
-        <div class="max-w-6xl mx-auto max-w-sm">
+        <div class="mx-auto max-w-sm">
           <NuxtPage />
         </div>
       </section>

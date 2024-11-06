@@ -12,13 +12,13 @@ export const useMainStore = defineStore("main", () => {
     default: () => undefined,
     sameSite: "strict",
     watch: true,
-    maxAge: 24 * 60 * 60,
+    maxAge: 60 * 60,
   });
   const refreshToken = useCookie<string | undefined>("refresh", {
     default: () => undefined,
     sameSite: "strict",
     watch: true,
-    maxAge: 24 * 60 * 60,
+    maxAge: 2 * 60 * 60,
   });
   // user
   const user = ref();
@@ -29,8 +29,6 @@ export const useMainStore = defineStore("main", () => {
     await signIn({ username, password });
     if (!error.value && data?.value != null) {
       setAuthData(data.value);
-      // nuxtApp.$axios.defaults.headers.common["Authorization"] =
-      //   `Bearer ${data.value?.accessToken}`;
     } else throw error;
   };
   // action: getMe
@@ -39,7 +37,7 @@ export const useMainStore = defineStore("main", () => {
     globalLoading.value = true;
     await getMe();
     if (!error.value) {
-      console.log(data.value);
+      //console.log(data.value);
       user.value = data.value;
     } else {
       console.warn("getMe Error", error);

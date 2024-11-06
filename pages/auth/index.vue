@@ -16,25 +16,44 @@ const route = useRoute();
 const username = ref(route.query.username?.toString() || "");
 const password = ref();
 
-const error = ref<RequestError | null>(null);
+const warning = ref<RequestError | null>(null);
 const loading = ref(false);
 
 async function onSubmit() {
   try {
     loading.value = true;
     await mainStore.login(username.value, password.value);
-    router.push({ name: "tasks" });
+    const afterRoute = route.query["after-route"];
+    if (typeof afterRoute === "string") {
+      router.push(afterRoute);
+    } else {
+      router.push({ name: "tasks" });
+    }
   } catch (e: unknown) {
-    error.value = e as RequestError;
+    warning.value = e as RequestError;
   } finally {
     loading.value = false;
   }
 }
+
+onMounted(() => {
+  if (route.query["auth-warning"] !== undefined) {
+    warning.value = {
+      message: "Для просмотра страницы требуется авторизация",
+      code: 1,
+    } as RequestError;
+  }
+});
 </script>
 
 <template>
   <div>
-    <t-alert v-if="error" type="danger" title="Ошибка" :text="error?.message" />
+    <t-alert
+      v-if="warning"
+      :type="warning.code > 100 ? 'danger' : 'warning'"
+      :title="warning.code > 100 ? 'Ошибка' : 'Внимание'"
+      :text="warning?.message"
+    />
     <Form id="sing-in" @submit="onSubmit">
       <t-input
         v-model="username"

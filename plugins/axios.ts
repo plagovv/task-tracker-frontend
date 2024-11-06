@@ -6,7 +6,7 @@ import axios, {
 import { defineNuxtPlugin } from "#app";
 import type { SignInRequest } from "~/api/types/signIn.interface";
 
-interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
+interface AxiosRequestConfigWithRetry extends InternalAxiosRequestConfig {
   _retry?: boolean;
 }
 
@@ -20,11 +20,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     });
 
   const apiClient: AxiosInstance = createNewInstance();
-
-  // if (mainStore.token) {
-  //   apiClient.defaults.headers.common["Authorization"] =
-  //     `Bearer ${mainStore.token}`;
-  // }
 
   apiClient.interceptors.request.use(
     (response) => {
@@ -42,7 +37,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   apiClient.interceptors.response.use(
     (response) => response,
     async (error: AxiosError) => {
-      const originalRequest = error.config as CustomAxiosRequestConfig;
+      const originalRequest = error.config as AxiosRequestConfigWithRetry;
       if (error.response?.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
         try {
