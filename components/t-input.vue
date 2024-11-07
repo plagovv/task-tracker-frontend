@@ -12,12 +12,12 @@ const props = withDefaults(
     veeOptions?: Partial<FieldOptions<unknown>>;
   }>(),
   {
-    label: null,
-    placeholder: null,
-    type: null,
+    label: undefined,
+    placeholder: undefined,
+    type: undefined,
     disabled: false,
-    rule: null,
-    veeOptions: null,
+    rule: undefined,
+    veeOptions: undefined,
   },
 );
 

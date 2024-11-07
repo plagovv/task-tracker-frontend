@@ -12,7 +12,7 @@ const props = defineProps({
 const baseClass = computed(() =>
   props.outline
     ? "icon-box border border-transparent text-slate-400 opacity-85"
-    : "bg-purple-500",
+    : "bg-purple-500 border-purple-500",
 );
 </script>
 
@@ -24,7 +24,7 @@ const baseClass = computed(() =>
       {
         'opacity-50': disabled,
         'cursor-not-allowed': disabled || loading,
-        'hover:bg-purple-600 hover:shadow-lg hover:shadow-purple-500/15 hover:duration-250':
+        'hover:bg-purple-600 hover:border-purple-600 hover:shadow-lg hover:shadow-purple-500/15 hover:duration-250':
           !disabled && !loading && !outline,
         'hover:text-white hover:opacity-100 hover:duration-250':
           !disabled && !loading && outline,
@@ -33,7 +33,7 @@ const baseClass = computed(() =>
       },
       baseClass,
     ]"
-    class="px-4 py-2.5 font-semibold text-center text-white text-sm leading-none rounded-md transition-all ease-in-out duration-150"
+    class="px-4 py-2.5 font-semibold text-center border text-white text-sm leading-none rounded-md transition-all ease-in-out duration-150"
     @click="$emit('click')"
   >
     <template v-if="loading">
@@ -60,7 +60,7 @@ const baseClass = computed(() =>
       Загрузка...
     </template>
     <template v-else-if="icon">
-      <Icon :icon="icon" size="24px" />
+      <Icon :icon="icon" size="1.5rem" />
     </template>
     <slot v-else />
   </button>

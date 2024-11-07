@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import TAvatar from "~/components/t-avatar.vue";
+
 const mainState = useMainStore();
 const route = useRoute();
 const inTasks = computed(() => route.name === "tasks");
@@ -38,10 +40,10 @@ const inTasks = computed(() => route.name === "tasks");
       <NuxtLink v-else href="/tasks">
         <t-button rounded class="mr-2"> Мои задачи </t-button>
       </NuxtLink>
-      <t-button
-        outline
+      <t-avatar
         rounded
-        icon="material-symbols:account-circle-outline"
+        size="lg"
+        src="https://img.freepik.com/premium-photo/graphic-designer-digital-avatar-generative-ai_934475-9292.jpg?w=50"
       />
       <div class=""></div>
     </template>
