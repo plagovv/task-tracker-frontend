@@ -11,7 +11,10 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return navigateTo("/", { redirectCode: 301 });
   }
 
-  if (isEmpty(mainStore.user) && !!mainStore.token) {
+  if (
+    isEmpty(mainStore.user) &&
+    (!!mainStore.token || !!mainStore.refreshToken)
+  ) {
     await mainStore.getMe();
   }
 });

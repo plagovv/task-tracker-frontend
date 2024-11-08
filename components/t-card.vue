@@ -1,7 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const cardElement = useTemplateRef("card");
+defineExpose({ cardElement });
+</script>
 
 <template>
-  <div class="shadow-lg rounded-lg bg-white p-5">
+  <div
+    ref="card"
+    class="dark:bg-slate-900 rounded-md bg-white shadow-lg ring-1 dark:ring-slate-200/20 ring-black ring-opacity-5"
+  >
     <slot />
   </div>
 </template>

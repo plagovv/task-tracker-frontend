@@ -1,11 +1,27 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import useClickOutside from "~/composables/useClickOutside";
+
+const show = ref<boolean>(false);
+
+const triggerElement = useTemplateRef("trigger");
+const contentElement = useTemplateRef("content");
+useClickOutside(() => {
+  show.value = false;
+}, [triggerElement, contentElement]);
+</script>
 
 <template>
-  <div>
-    <div class="element">
-      <slot></slot>
+  <div class="relative">
+    <div ref="trigger" class="cursor-pointer" @click="show = !show">
+      <slot />
     </div>
-    <div></div>
+    <div
+      v-if="show"
+      ref="content"
+      class="absolute right-0 z-10 mt-2 w-max max-w-96 origin-top-right focus:outline-none"
+    >
+      <slot name="content" />
+    </div>
   </div>
 </template>
 

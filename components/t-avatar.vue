@@ -43,7 +43,7 @@ const setReady = (value: boolean) => {
   <div
     style=""
     class="icon-box border border-transparent text-slate-400 p-2 flex-none items-center justify-center leading-none rounded-md relative overflow-clip"
-    :class="{ 'rounded-full': rounded }"
+    :class="{ '!rounded-full': rounded }"
   >
     <client-only>
       <img
@@ -51,6 +51,7 @@ const setReady = (value: boolean) => {
         v-show="imageReady"
         :src="props.src"
         class="absolute left-1/2 transform -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-none"
+        alt=""
         @load="setReady(true)"
         @error="setReady(false)"
       />

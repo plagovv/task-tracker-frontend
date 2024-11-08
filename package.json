@@ -20,6 +20,8 @@
     "@vee-validate/nuxt": "^4.13.2",
     "@vee-validate/yup": "^4.13.2",
     "axios": "^1.7.7",
+    "dayjs": "^1.11.13",
+    "dayjs-nuxt": "^2.1.11",
     "lodash": "^4.17.21",
     "nuxt": "^3.13.0",
     "nuxt-icon-tw": "^1.0.0",

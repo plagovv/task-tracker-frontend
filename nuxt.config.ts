@@ -23,6 +23,7 @@ export default defineNuxtConfig({
     "@vee-validate/nuxt",
     "nuxt-icon-tw",
     "@pinia/nuxt",
+    "dayjs-nuxt",
   ],
   plugins: ["~/plugins/axios"],
   css: ["~/assets/css/main.css"],

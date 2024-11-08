@@ -4,6 +4,29 @@ import TAvatar from "~/components/t-avatar.vue";
 const mainState = useMainStore();
 const route = useRoute();
 const inTasks = computed(() => route.name === "tasks");
+const dayjs = useDayjs();
+
+const welcome = computed(() => {
+  const hour = dayjs().hour();
+
+  if (hour >= 0 && hour <= 3) {
+    return "Доброй ночи";
+  }
+
+  if (hour >= 4 && hour <= 11) {
+    return "Доброе утро";
+  }
+
+  if (hour >= 12 && hour <= 16) {
+    return "Добрый день";
+  }
+
+  if (hour > 17 && hour <= 23) {
+    return "Добрый вечер";
+  }
+
+  return `err: ${hour}`;
+});
 </script>
 
 <template>
@@ -40,11 +63,35 @@ const inTasks = computed(() => route.name === "tasks");
       <NuxtLink v-else href="/tasks">
         <t-button rounded class="mr-2"> Мои задачи </t-button>
       </NuxtLink>
-      <t-avatar
-        rounded
-        size="lg"
-        src="https://img.freepik.com/premium-photo/graphic-designer-digital-avatar-generative-ai_934475-9292.jpg?w=50"
-      />
+      <t-dropdown>
+        <t-avatar
+          rounded
+          size="lg"
+          src="https://img.freepik.com/premium-photo/graphic-designer-digital-avatar-generative-ai_934475-9292.jpg?w=50"
+        />
+        <template #content>
+          <t-card class="w-72">
+            <t-list>
+              <div class="px-4 py-2">
+                <p>{{ welcome }},</p>
+                <p>
+                  <span class="font-bold">
+                    @{{ mainState?.user.username }}
+                  </span>
+                  !
+                </p>
+              </div>
+              <t-list-item @click="mainState.logout()">
+                <template #pre>
+                  <icon name="material-symbols:exit-to-app-rounded" />
+                </template>
+                Выход
+              </t-list-item>
+            </t-list>
+          </t-card>
+        </template>
+      </t-dropdown>
+
       <div class=""></div>
     </template>
   </header>
