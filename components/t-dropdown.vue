@@ -12,8 +12,8 @@ const triggerElement = useTemplateRef("trigger");
 const contentElement = useTemplateRef("content");
 
 function getExcludeComponents(hideOnClick: boolean) {
-  if (hideOnClick) return [triggerElement, contentElement];
-  else return [triggerElement];
+  if (hideOnClick) return [triggerElement];
+  else return [triggerElement, contentElement];
 }
 
 const reinitClickOutside = useClickOutside(() => {
