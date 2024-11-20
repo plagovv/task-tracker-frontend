@@ -1,6 +1,7 @@
 import type { ShallowRef } from "vue";
 import { onMounted, onBeforeUnmount } from "vue";
 
+type ExcludeComponents<T> = ReadonlyArray<ShallowRef<T | null>>;
 /**
  * Хук для работы с нажатием вне элемента
  * @param callback - функция без возврата
@@ -8,7 +9,7 @@ import { onMounted, onBeforeUnmount } from "vue";
  */
 export default function useClickOutside<T = unknown>(
   callback: () => void,
-  excludeComponents: ReadonlyArray<ShallowRef<T | null>> = [],
+  excludeComponents: ExcludeComponents<T> = [],
 ) {
   if (excludeComponents.length === 0) {
     throw new Error(
@@ -42,4 +43,12 @@ export default function useClickOutside<T = unknown>(
   onBeforeUnmount(() => {
     window.removeEventListener("click", listener);
   });
+
+  function reinit(newExcludeComponents: ExcludeComponents<T> = []) {
+    window.removeEventListener("click", listener);
+    excludeComponents = newExcludeComponents;
+    window.addEventListener("click", listener);
+  }
+
+  return reinit;
 }

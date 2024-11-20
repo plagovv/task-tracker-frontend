@@ -1,13 +1,29 @@
 <script setup lang="ts">
 import useClickOutside from "~/composables/useClickOutside";
-
+const props = withDefaults(
+  defineProps<{
+    hideOnClick?: boolean;
+  }>(),
+  { hideOnClick: false },
+);
 const show = ref<boolean>(false);
 
 const triggerElement = useTemplateRef("trigger");
 const contentElement = useTemplateRef("content");
-useClickOutside(() => {
+
+function getExcludeComponents(hideOnClick: boolean) {
+  if (hideOnClick) return [triggerElement, contentElement];
+  else return [triggerElement];
+}
+
+const reinitClickOutside = useClickOutside(() => {
   show.value = false;
-}, [triggerElement, contentElement]);
+}, getExcludeComponents(props.hideOnClick));
+
+watch(
+  () => props.hideOnClick,
+  () => reinitClickOutside(getExcludeComponents(props.hideOnClick)),
+);
 </script>
 
 <template>

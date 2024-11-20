@@ -4,12 +4,14 @@ const props = withDefaults(
     src?: string;
     alt?: string;
     rounded?: boolean;
+    icon?: string;
     size?: "sm" | "md" | "lg" | number;
   }>(),
   {
     src: undefined,
     alt: "Avatar",
     size: "md",
+    icon: "material-symbols:account-circle-outline",
     rounded: false,
   },
 );
@@ -42,7 +44,7 @@ const setReady = (value: boolean) => {
 <template>
   <div
     style=""
-    class="icon-box border border-transparent text-slate-400 p-2 flex-none items-center justify-center leading-none rounded-md relative overflow-clip"
+    class="w-fit icon-box border border-transparent text-slate-400 p-2 flex-none items-center justify-center leading-none rounded-md relative overflow-clip"
     :class="{ '!rounded-full': rounded }"
   >
     <client-only>
@@ -56,10 +58,7 @@ const setReady = (value: boolean) => {
         @error="setReady(false)"
       />
     </client-only>
-    <Icon
-      icon="material-symbols:account-circle-outline"
-      :size="getIconSize()"
-    />
+    <Icon :icon="props.icon" :size="getIconSize()" />
   </div>
 </template>
 

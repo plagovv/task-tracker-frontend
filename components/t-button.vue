@@ -6,14 +6,21 @@ const props = defineProps({
   loading: { type: Boolean, default: false },
   outline: { type: Boolean, default: false },
   rounded: { type: Boolean, default: false },
+  pain: { type: Boolean, default: false },
   icon: { type: String, default: undefined },
 });
 
-const baseClass = computed(() =>
-  props.outline
-    ? "icon-box border border-transparent text-slate-400 opacity-85"
-    : "bg-purple-500 border-purple-500",
-);
+const baseClass = computed(() => {
+  if (props.outline) {
+    return "icon-box border border-transparent text-slate-400 opacity-85";
+  }
+
+  if (props.pain) {
+    return "icon-pain border border-transparent text-slate-400 opacity-85";
+  }
+
+  return "bg-purple-500 border-purple-500";
+});
 </script>
 
 <template>
@@ -25,15 +32,17 @@ const baseClass = computed(() =>
         'opacity-50': disabled,
         'cursor-not-allowed': disabled || loading,
         'hover:bg-purple-600 hover:border-purple-600 hover:shadow-lg hover:shadow-purple-500/15 hover:duration-250':
-          !disabled && !loading && !outline,
+          !disabled && !loading && !outline && !pain,
         'hover:text-white hover:opacity-100 hover:duration-250':
           !disabled && !loading && outline,
+        'hover:text-white active:bg-purple-600/10 hover:opacity-100 hover:duration-150':
+          !disabled && !loading && pain,
         '!rounded-full': rounded,
         '!p-2': rounded && icon,
       },
       baseClass,
     ]"
-    class="px-4 py-2.5 font-semibold text-center border text-white text-sm leading-none rounded-md transition-all ease-in-out duration-150"
+    class="select-none px-4 py-2.5 font-semibold text-center border text-white text-sm leading-none rounded-md transition-all ease-in-out duration-150"
     @click="$emit('click')"
   >
     <template v-if="loading">

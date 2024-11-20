@@ -9,13 +9,11 @@ watch(
 useSeoMeta({
   title: route.meta.title as string,
 });
-
-// const mainState = useMainStore();
 </script>
 
 <template>
   <div class="layout-default">
-    <NuxtLoadingIndicator style="height: 10px" />
+    <NuxtLoadingIndicator style="height: 1px" color="#a855f7" />
     <t-header />
     <NuxtPage />
   </div>

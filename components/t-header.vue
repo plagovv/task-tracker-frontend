@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import TAvatar from "~/components/t-avatar.vue";
+import { TDropdown } from "#components";
 
 const mainState = useMainStore();
 const route = useRoute();
-const inTasks = computed(() => route.name === "tasks");
+const inTasks = computed(
+  () => route.name === "tasks" || route.name === "tasks-list",
+);
 const dayjs = useDayjs();
 
 const welcome = computed(() => {
@@ -21,7 +23,7 @@ const welcome = computed(() => {
     return "Добрый день";
   }
 
-  if (hour > 17 && hour <= 23) {
+  if (hour >= 17 && hour <= 23) {
     return "Добрый вечер";
   }
 
@@ -30,10 +32,17 @@ const welcome = computed(() => {
 </script>
 
 <template>
-  <header class="w-100 flex items-center justify-between h-16 px-4">
+  <header class="w-100 flex items-center justify-between h-16 px-4 select-none">
     <!-- логотип -->
-    <div class="flex-1">
-      <NuxtLink href="/" class="inline-flex">
+    <div class="flex-1 flex items-center">
+      <t-button
+        v-if="inTasks"
+        rounded
+        pain
+        class="mr-2"
+        icon="material-symbols:menu-rounded"
+      />
+      <NuxtLink href="/" class="cursor-pointer">
         <img
           src="/image/logo.svg"
           width="38"
@@ -91,8 +100,6 @@ const welcome = computed(() => {
           </t-card>
         </template>
       </t-dropdown>
-
-      <div class=""></div>
     </template>
   </header>
 </template>
