@@ -1,5 +1,5 @@
 import { useSighIn } from "~/api/useSignIn.api";
-import { useGetMe } from "~/api/useGetMe";
+import { useGetMeApi } from "~/api/useGetMe.api";
 // import type { NuxtApp } from "#app";
 import type { SignInRequest } from "~/api/types/signIn.interface";
 
@@ -33,7 +33,7 @@ export const useMainStore = defineStore("main", () => {
   };
   // action: getMe
   const getMe = async () => {
-    const { error, data, getMe } = useGetMe();
+    const { error, data, getMe } = useGetMeApi();
     globalLoading.value = true;
     await getMe();
     if (!error.value) {

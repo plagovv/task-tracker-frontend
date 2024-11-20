@@ -1,16 +1,13 @@
 <script setup lang="ts">
+import { useTasksStore } from "~/stores/tasks.store";
+
 definePageMeta({
   title: "Задачи - Список",
   layout: "default",
   middleware: ["auth-protect"],
 });
 
-const tasks = reactive([
-  { id: 1, title: "Задача 1" },
-  { id: 2, title: "Задача 2" },
-  { id: 3, title: "Задача 3" },
-  { id: 4, title: "Задача 4" },
-]);
+const tasksStore = useTasksStore();
 </script>
 
 <template>
@@ -20,8 +17,14 @@ const tasks = reactive([
       Добавить задачу
     </t-card>
 
+    <pre>{{ tasksStore.tasks }}</pre>
+
     <t-list title="Задачи &#183; 4">
-      <t-card v-for="{ title, id } in tasks" :key="id" class="mb-3">
+      <t-card
+        v-for="{ title, _id } in tasksStore.tasks"
+        :key="_id"
+        class="mb-3"
+      >
         <t-list-item>
           {{ title }}
           <template #pre>
@@ -31,7 +34,11 @@ const tasks = reactive([
       </t-card>
     </t-list>
     <t-list title="Завершенные &#183; 4" class="mt-10">
-      <t-card v-for="{ title, id } in tasks" :key="id + 'comp'" class="mb-3">
+      <t-card
+        v-for="{ title, _id } in tasksStore.tasks"
+        :key="_id + 'comp'"
+        class="mb-3"
+      >
         <t-list-item>
           {{ title }}
           <template #pre>

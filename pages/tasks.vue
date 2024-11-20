@@ -1,10 +1,15 @@
 <script setup lang="ts">
+import { useTasksStore } from "~/stores/tasks.store";
+
 definePageMeta({
   title: "Задачи",
   layout: "default",
   middleware: ["auth-protect"],
 });
 const route = useRoute();
+
+const tasksStore = useTasksStore();
+await useAsyncData("tasks", () => tasksStore.fetchTaskList().then(() => true));
 </script>
 
 <template>
@@ -46,6 +51,7 @@ const route = useRoute();
         </template>
       </t-dropdown>
     </div>
+    <div v-if="tasksStore.loading">Loading</div>
     <NuxtPage />
   </div>
 </template>

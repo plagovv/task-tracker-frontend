@@ -4,7 +4,7 @@ import type { ErrorRequest, RequestError } from "~/api/types/error.interface";
 import { AxiosError as AxiosErrorFromImport } from "axios";
 import type { GetMeRequest } from "~/api/types/getMe.interface";
 
-export const useGetMe = () => {
+export const useGetMeApi = () => {
   const nuxtApp: NuxtApp = useNuxtApp();
   const data = ref<GetMeRequest | null>(null);
   const error = ref<RequestError | null>(null);
