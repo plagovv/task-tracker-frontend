@@ -8,11 +8,19 @@ definePageMeta({
 });
 
 const tasksStore = useTasksStore();
+
+const { open: openCreateModal } = useModal("tasksModal");
 </script>
 
 <template>
   <div class="w-full mt-20">
-    <t-card class="flex items-center p-2 hover:bg-slate-800/20 cursor-pointer">
+    <t-modal ref="tasksModal">
+      <div>Что-то тестовое</div>
+    </t-modal>
+    <t-card
+      class="flex items-center p-2 hover:bg-slate-800/20 cursor-pointer"
+      @click="openCreateModal"
+    >
       <t-button
         outline
         rounded
