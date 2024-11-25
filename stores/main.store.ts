@@ -1,7 +1,7 @@
-import { useSighIn } from "~/api/useSignIn.api";
-import { useGetMeApi } from "~/api/useGetMe.api";
+import { useSighIn } from "~/composables/api/useSignIn.api";
+import { useGetMeApi } from "~/composables/api/useGetMe.api";
 // import type { NuxtApp } from "#app";
-import type { SignInRequest } from "~/api/types/signIn.interface";
+import type { SignInRequest } from "~/types/api/signIn.interface";
 
 export const useMainStore = defineStore("main", () => {
   const router = useRouter();

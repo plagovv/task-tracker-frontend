@@ -1,8 +1,12 @@
-import { useGetTaskList } from "~/api/useGetTaskList.api";
-import type { Task } from "~/api/types/tasksFactory.interface";
+import { useGetTaskList } from "~/composables/api/useGetTaskList.api";
+import type {
+  Task,
+  TaskItem,
+  UpdateTaskResponse,
+} from "~/types/api/tasksFactory.interface";
 
 export const useTasksStore = defineStore("tasks", () => {
-  const tasks = ref<Task[] | null>(null);
+  const tasks = ref<TaskItem[] | null>(null);
 
   const { data, getTaskList, error, loading } = useGetTaskList();
 
@@ -10,13 +14,37 @@ export const useTasksStore = defineStore("tasks", () => {
     await getTaskList();
     tasks.value = data.value;
   }
-  function updateTask(task: Task) {
+
+  /**
+   * Создание задачи
+   * @param task
+   */
+  function createTask(task: Task) {
+    // TODO: createTask
+  }
+
+  /**
+   * Обновление задачи
+   * @param taskId
+   * @param task
+   */
+  function updateTask(taskId: string, task: UpdateTaskResponse) {
     // TODO: updateTask
+  }
+
+  /**
+   * Удаление задачи
+   * @param taskId
+   */
+  function deleteTask(taskId: string) {
+    // TODO: deleteTask
   }
 
   return {
     fetchTaskList,
+    createTask,
     updateTask,
+    deleteTask,
     tasks,
     error,
     loading,

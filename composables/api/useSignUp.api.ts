@@ -3,10 +3,10 @@ import { useNuxtApp } from "#app";
 import type {
   SignUpRequest,
   SignUpResponse,
-} from "~/api/types/signUp.interface";
-import type { ErrorRequest, RequestError } from "~/api/types/error.interface";
+} from "~/types/api/signUp.interface";
+import type { ErrorRequest, RequestError } from "~/types/api/error.interface";
 import { AxiosError as AxiosErrorFromImport } from "axios";
-import type { SignInResponse } from "~/api/types/signIn.interface";
+import type { SignInResponse } from "~/types/api/signIn.interface";
 
 export const useSignUp = () => {
   const nuxtApp = useNuxtApp();

@@ -1,36 +1,31 @@
 <script setup lang="ts">
-type AlertType = "success" | "info" | "warning" | "danger" | "default";
+import type {
+  ColorVariants,
+  VariantType,
+} from "~/types/components/colorVariants";
 
-interface AlertColorVariants {
-  success: string;
-  warning: string;
-  danger: string;
-  info: string;
-  default: string | "";
-}
-
-const iconColorVariants: AlertColorVariants = {
+const iconColorVariants: ColorVariants = {
   success: "text-green-400",
   warning: "text-yellow-400",
   danger: "text-red-400",
   info: "text-purple-400",
   default: "",
 };
-const textColorVariants: AlertColorVariants = {
+const textColorVariants: ColorVariants = {
   success: "text-green-500",
   warning: "text-yellow-500",
   danger: "text-red-500",
   info: "text-purple-500",
   default: "",
 };
-const bgColorVariants: AlertColorVariants = {
+const bgColorVariants: ColorVariants = {
   success: "before:from-green-500/45",
   warning: "before:from-yellow-500/45",
   danger: "before:from-red-500/45",
   info: "before:from-purple-500/45",
   default: "before:from-slate-800/30",
 };
-const iconVariants: AlertColorVariants = {
+const iconVariants: ColorVariants = {
   success: "material-symbols:check-circle-rounded",
   warning: "material-symbols:error-rounded",
   danger: "material-symbols:cancel-rounded",
@@ -39,7 +34,7 @@ const iconVariants: AlertColorVariants = {
 };
 
 const props = withDefaults(
-  defineProps<{ type?: AlertType; title?: string; text: string }>(),
+  defineProps<{ type?: VariantType; title?: string; text: string }>(),
   {
     title: "Внимание!",
     type: "default",

@@ -4,7 +4,7 @@ import axios, {
   type InternalAxiosRequestConfig,
 } from "axios";
 import { defineNuxtPlugin } from "#app";
-import type { SignInRequest } from "~/api/types/signIn.interface";
+import type { SignInRequest } from "~/types/api/signIn.interface";
 
 interface AxiosRequestConfigWithRetry extends InternalAxiosRequestConfig {
   _retry?: boolean;

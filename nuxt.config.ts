@@ -51,7 +51,7 @@ export default defineNuxtConfig({
     },
   },
   iconTw: {
-    collections: ["material-symbols"],
+    collections: ["material-symbols", "mdi"],
   },
   pinia: {
     storesDirs: ["./stores/**"],

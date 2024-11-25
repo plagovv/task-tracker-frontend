@@ -2,7 +2,7 @@
 import { Form } from "vee-validate";
 import { string } from "yup";
 import { useMainStore } from "~/stores/main.store";
-import type { RequestError } from "~/api/types/error.interface";
+import type { RequestError } from "~/types/api/error.interface";
 
 definePageMeta({
   layout: "auth",

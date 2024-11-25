@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Form } from "vee-validate";
 import { string, ref as yupRef } from "yup";
-import { useSignUp } from "~/api/useSignUp.api";
+import { useSignUp } from "~/composables/api/useSignUp.api";
 
 definePageMeta({
   layout: "auth",

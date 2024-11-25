@@ -1,20 +1,20 @@
 import type { NuxtApp } from "#app";
 import { useNuxtApp } from "#app";
 import { ref } from "vue";
-import type { ErrorRequest, RequestError } from "~/api/types/error.interface";
-import type { Task } from "~/api/types/tasksFactory.interface";
+import type { ErrorRequest, RequestError } from "~/types/api/error.interface";
+import type { TaskItem } from "~/types/api/tasksFactory.interface";
 import { AxiosError as AxiosErrorFromImport } from "axios";
 
 export const useGetTaskList = () => {
   const nuxtApp: NuxtApp = useNuxtApp();
-  const data = ref<Task[] | null>(null);
+  const data = ref<TaskItem[] | null>(null);
   const error = ref<RequestError | null>(null);
   const loading = ref<boolean>(false);
 
   async function getTaskList() {
     loading.value = true;
     try {
-      const response = await nuxtApp.$axios.get<Task[]>("/tasks");
+      const response = await nuxtApp.$axios.get<TaskItem[]>("/tasks");
       data.value = response.data;
     } catch (err: unknown) {
       if (err instanceof AxiosErrorFromImport) {

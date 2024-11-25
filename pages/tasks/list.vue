@@ -12,40 +12,26 @@ const tasksStore = useTasksStore();
 
 <template>
   <div class="w-full mt-20">
-    <t-card class="flex items-center p-2 hover:bg-slate-800/20">
-      <t-avatar icon="material-symbols:add-rounded" rounded class="mr-2" />
+    <t-card class="flex items-center p-2 hover:bg-slate-800/20 cursor-pointer">
+      <t-button
+        outline
+        rounded
+        icon="material-symbols:add-rounded"
+        class="mr-2"
+      />
       Добавить задачу
     </t-card>
 
-    <pre>{{ tasksStore.tasks }}</pre>
-
-    <t-list title="Задачи &#183; 4">
-      <t-card
-        v-for="{ title, _id } in tasksStore.tasks"
-        :key="_id"
+    <t-list
+      :title="`Задачи &#183; ${tasksStore.tasks?.length || 0}`"
+      class="mt-10"
+    >
+      <t-task-list-card
+        v-for="task in tasksStore.tasks"
+        :key="task._id"
+        :task="task"
         class="mb-3"
-      >
-        <t-list-item>
-          {{ title }}
-          <template #pre>
-            <t-button pain icon="material-symbols:check-box-outline-blank" />
-          </template>
-        </t-list-item>
-      </t-card>
-    </t-list>
-    <t-list title="Завершенные &#183; 4" class="mt-10">
-      <t-card
-        v-for="{ title, _id } in tasksStore.tasks"
-        :key="_id + 'comp'"
-        class="mb-3"
-      >
-        <t-list-item>
-          {{ title }}
-          <template #pre>
-            <t-button pain icon="material-symbols:check-box-outline-blank" />
-          </template>
-        </t-list-item>
-      </t-card>
+      />
     </t-list>
   </div>
 </template>
