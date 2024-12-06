@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useTasksStore } from "~/stores/tasks.store";
+import { ADD_MODAL_KEY } from "~/components/t-modals/modal-keys";
 
 definePageMeta({
   title: "Задачи - Список",
@@ -7,19 +8,17 @@ definePageMeta({
   middleware: ["auth-protect"],
 });
 
-const tasksStore = useTasksStore();
+const addModalOpenInjected = inject<() => void>(ADD_MODAL_KEY);
 
-const { open: openCreateModal } = useModal("tasksModal");
+const tasksStore = useTasksStore();
 </script>
 
 <template>
   <div class="w-full mt-20">
-    <t-modal ref="tasksModal">
-      <div>Что-то тестовое</div>
-    </t-modal>
+    <div></div>
     <t-card
       class="flex items-center p-2 hover:bg-slate-800/20 cursor-pointer"
-      @click="openCreateModal"
+      @click="addModalOpenInjected"
     >
       <t-button
         outline

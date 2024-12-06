@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { TDropdown } from "#components";
+import { ADD_MODAL_KEY } from "~/components/t-modals/modal-keys";
 
 const mainState = useMainStore();
 const route = useRoute();
@@ -29,6 +30,8 @@ const welcome = computed(() => {
 
   return `err: ${hour}`;
 });
+
+const addModalOpenInjected = inject<() => void>(ADD_MODAL_KEY);
 </script>
 
 <template>
@@ -68,6 +71,7 @@ const welcome = computed(() => {
         rounded
         icon="material-symbols:add-rounded"
         class="mr-2"
+        @click="addModalOpenInjected"
       />
       <NuxtLink v-else href="/tasks">
         <t-button rounded class="mr-2"> Мои задачи </t-button>
