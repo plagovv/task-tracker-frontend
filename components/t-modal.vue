@@ -6,7 +6,7 @@ const props = withDefaults(
     title?: string;
   }>(),
   {
-    closeOutside: true,
+    closeOutside: false,
     hideTitle: false,
     title: "Модальное окно",
   },
@@ -39,33 +39,59 @@ defineExpose({
 </script>
 
 <template>
-  <div
-    v-show="isShow"
-    class="absolute left-0 top-0 w-full h-full flex items-center justify-center"
-  >
+  <transition name="fade">
     <div
-      class="fixed inset-0 bg-gray-500/75 dark:bg-gray-900/50 transition-opacity"
-      @click="props.closeOutside ? close : () => 0"
-    ></div>
-    <t-card class="relative w-1/3">
-      <div class="divide-y divide-slate-700">
-        <div v-if="!hideTitle" class="mx-4 my-3 divide-y divide-slate-700">
-          <slot v-if="typeof slots?.title === 'function'" name="title" />
-          <span v-else class="font-bold text-xl"> {{ props.title }} </span>
-        </div>
-        <div class="px-4 py-3">
-          <slot />
-        </div>
-        <div class="flex items-center">
-          <slot v-if="slots?.actions" name="actions" />
-          <div v-else class="flex items-center justify-end w-full mx-4 my-3">
-            <t-button @click="close">Закрыть</t-button>
-            <t-button pain @click="close">Отмена</t-button>
+      v-if="isShow"
+      class="absolute left-0 top-0 w-full h-full flex items-center justify-center"
+    >
+      <div
+        class="fixed inset-0 bg-gray-500/75 dark:bg-gray-900/50 transition-opacity"
+        @click="props.closeOutside ? close() : () => 0"
+      ></div>
+      <t-card class="modal-body relative w-1/3">
+        <div class="divide-y divide-slate-700">
+          <div v-if="!hideTitle" class="mx-4 my-3 divide-y divide-slate-700">
+            <slot v-if="typeof slots?.title === 'function'" name="title" />
+            <span v-else class="font-bold text-xl"> {{ props.title }} </span>
+          </div>
+          <div class="px-4 py-3">
+            <slot />
+          </div>
+          <div class="flex items-center">
+            <slot v-if="slots?.actions" name="actions" />
+            <div v-else class="flex items-center justify-end w-full mx-4 my-3">
+              <t-button @click="close">Закрыть</t-button>
+              <t-button pain @click="close">Отмена</t-button>
+            </div>
           </div>
         </div>
-      </div>
-    </t-card>
-  </div>
+      </t-card>
+    </div>
+  </transition>
 </template>
 
-<style scoped></style>
+<style scoped>
+.fade-enter-active,
+.fade-enter-active .modal-body {
+  transition: 0.3s all ease-in-out;
+}
+
+.fade-leave-active,
+.fade-leave-active .modal-body {
+  transition: 0.2s all ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+.fade-enter-from .modal-body {
+  filter: blur(2px);
+}
+
+.fade-enter-to .modal-body {
+  filter: blur(0px);
+}
+</style>
