@@ -4,11 +4,13 @@ const props = withDefaults(
     closeOutside?: boolean;
     hideTitle?: boolean;
     title?: string;
+    loading?: boolean;
   }>(),
   {
     closeOutside: false,
     hideTitle: false,
     title: "Модальное окно",
+    loading: false,
   },
 );
 
@@ -48,7 +50,7 @@ defineExpose({
         class="fixed inset-0 bg-gray-500/75 dark:bg-gray-900/50 transition-opacity"
         @click="props.closeOutside ? close() : () => 0"
       ></div>
-      <t-card class="modal-body relative w-1/3">
+      <t-card class="modal-body z-10 w-1/3 max-h-[80%] overflow-auto">
         <div class="divide-y divide-slate-700">
           <div v-if="!hideTitle" class="mx-4 my-3 divide-y divide-slate-700">
             <slot v-if="typeof slots?.title === 'function'" name="title" />
@@ -58,7 +60,7 @@ defineExpose({
             <slot />
           </div>
           <div class="flex items-center">
-            <slot v-if="slots?.actions" name="actions" />
+            <slot v-if="slots?.actions" name="actions" :close="close" />
             <div v-else class="flex items-center justify-end w-full mx-4 my-3">
               <t-button @click="close">Закрыть</t-button>
               <t-button pain @click="close">Отмена</t-button>

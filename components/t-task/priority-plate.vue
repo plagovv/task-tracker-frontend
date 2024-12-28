@@ -21,7 +21,7 @@ const iconColor = computed(() => {
 </script>
 
 <template>
-  <icon :icon="iconName" :class="[iconColor]" alt="1231231" />
+  <icon :icon="iconName" :class="[iconColor]" />
 </template>
 
 <style scoped></style>

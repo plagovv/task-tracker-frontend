@@ -13,9 +13,7 @@ const { task } = defineProps<{ task: TaskItem }>();
       {{ task.title }}
       <template #actions>
         <div class="flex items-center">
-          <t-task-status-plate :status="task.status" class="my-auto">
-            К Выполнению
-          </t-task-status-plate>
+          <t-task-status-plate :status="task.status" class="my-auto" />
         </div>
       </template>
     </t-list-item>
