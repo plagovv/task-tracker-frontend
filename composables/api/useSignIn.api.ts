@@ -19,6 +19,9 @@ export const useSighIn = () => {
       const response = await nuxtApp.$axios.post<SignInRequest>(
         "/auth/login",
         args,
+        {
+          fetchOptions: { withoutRefresh: true },
+        },
       );
       data.value = response.data;
     } catch (err: unknown) {

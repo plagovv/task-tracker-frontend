@@ -18,7 +18,7 @@ const password = ref();
 async function onSubmit() {
   await signUp({ username: username.value, password: password.value });
   if (!error.value) {
-    router.push({ name: "sign-in", query: { username: username.value } });
+    router.push({ name: "auth", query: { username: username.value } });
   }
 }
 </script>

@@ -13,7 +13,9 @@ const mainStore = useMainStore();
 const router = useRouter();
 const route = useRoute();
 
-const username = ref(route.query.username?.toString() || "");
+const form = useTemplateRef("from");
+
+const username = ref("");
 const password = ref();
 
 const warning = ref<RequestError | null>(null);
@@ -43,6 +45,10 @@ onMounted(() => {
       code: 1,
     } as RequestError;
   }
+  if (typeof route.query?.username === "string") {
+    username.value = route.query.username;
+    form.value?.setFieldValue("username", username.value);
+  }
 });
 </script>
 
@@ -54,7 +60,7 @@ onMounted(() => {
       :title="warning.code > 100 ? 'Ошибка' : 'Внимание'"
       :text="warning?.message"
     />
-    <Form id="sing-in" @submit="onSubmit">
+    <Form id="sing-in" ref="from" @submit="onSubmit">
       <t-input
         v-model="username"
         name="username"

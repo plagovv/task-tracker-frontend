@@ -29,7 +29,7 @@ export const useMainStore = defineStore("main", () => {
     await signIn({ username, password });
     if (!error.value && data?.value != null) {
       setAuthData(data.value);
-    } else throw error;
+    } else throw error.value;
   };
   // action: getMe
   const getMe = async () => {

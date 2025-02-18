@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   },
   appConfig: {
     appDomain: process.env.APP_DOMAIN,
-    ssl: process.env.APP_SSL,
+    ssl: process.env.APP_SSL === 'true',
   },
   app: {
     head: {

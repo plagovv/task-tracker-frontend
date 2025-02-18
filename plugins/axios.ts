@@ -16,7 +16,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   const createNewInstance: () => AxiosInstance = () =>
     axios.create({
-      baseURL: `http${ssl === "true" ? "s" : ""}://${appDomain}`,
+      baseURL: `http${ssl ? "s" : ""}://${appDomain}`,
     });
 
   const apiClient: AxiosInstance = createNewInstance();
@@ -38,7 +38,12 @@ export default defineNuxtPlugin((nuxtApp) => {
     (response) => response,
     async (error: AxiosError) => {
       const originalRequest = error.config as AxiosRequestConfigWithRetry;
-      if (error.response?.status === 401 && !originalRequest._retry) {
+
+      if (
+        error.response?.status === 401 &&
+        !originalRequest._retry &&
+        !originalRequest!.fetchOptions!.withoutRefresh
+      ) {
         originalRequest._retry = true;
         try {
           const refreshInstance = createNewInstance();
