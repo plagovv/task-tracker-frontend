@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import type { VariantType } from "~/types/components/colorVariants";
-import type {
-  TaskStatus,
-  StatusBasicType,
-} from "~/types/api/statusFactory.interface";
+import type { StatusBasicType, TaskStatus } from "~/apiServices/TaskService";
 
 const { status } = defineProps<{
   status: TaskStatus;

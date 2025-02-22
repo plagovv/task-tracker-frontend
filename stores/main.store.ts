@@ -1,7 +1,6 @@
-import { useSighIn } from "~/composables/api/useSignIn.api";
-import { useGetMeApi } from "~/composables/api/useGetMe.api";
 // import type { NuxtApp } from "#app";
-import type { SignInRequest } from "~/types/api/signIn.interface";
+import { useAsync } from "~/composables/useAsync";
+import type { SignInRequest } from "~/apiServices/AuthService";
 
 export const useMainStore = defineStore("main", () => {
   const router = useRouter();
@@ -24,23 +23,32 @@ export const useMainStore = defineStore("main", () => {
   const user = ref();
   // action: login
   const login = async (username: string, password: string) => {
-    const { error, data, signIn } = useSighIn();
-    //const nuxtApp: NuxtApp = useNuxtApp();
-    await signIn({ username, password });
+    const { $services } = useNuxtApp();
+    const {
+      error,
+      data,
+      execute: signIn,
+    } = useAsync($services.auth.login, { context: $services.auth });
+    await signIn(username, password);
     if (!error.value && data?.value != null) {
       setAuthData(data.value);
     } else throw error.value;
   };
   // action: getMe
   const getMe = async () => {
-    const { error, data, getMe } = useGetMeApi();
+    const { $services } = useNuxtApp();
+    const {
+      error,
+      data,
+      execute: getMe,
+    } = useAsync($services.auth.getMe, { context: $services.auth });
     globalLoading.value = true;
     await getMe();
-    if (!error.value) {
+    if (!error.value && data?.value != null) {
       //console.log(data.value);
       user.value = data.value;
     } else {
-      console.warn("getMe Error", error);
+      console.warn("getMe Error", error.value);
       // global error
     }
     globalLoading.value = false;

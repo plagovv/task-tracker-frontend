@@ -2,7 +2,7 @@
 import { Form } from "vee-validate";
 import { string } from "yup";
 import { useMainStore } from "~/stores/main.store";
-import type { RequestError } from "~/types/api/error.interface";
+import type { RequestError } from "~/composables/useAsync";
 
 definePageMeta({
   layout: "auth",
@@ -32,6 +32,7 @@ async function onSubmit() {
       router.push({ name: "tasks" });
     }
   } catch (e: unknown) {
+    console.log("error", e);
     warning.value = e as RequestError;
   } finally {
     loading.value = false;

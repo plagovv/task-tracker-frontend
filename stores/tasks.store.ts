@@ -1,14 +1,20 @@
-import { useGetTaskList } from "~/composables/api/useGetTaskList.api";
+import { useAsync } from "~/composables/useAsync";
 import type {
-  Task,
   TaskItem,
+  CreateTaskResponse,
   UpdateTaskResponse,
-} from "~/types/api/tasksFactory.interface";
+} from "~/apiServices/TaskService";
 
 export const useTasksStore = defineStore("tasks", () => {
+  const { $services } = useNuxtApp();
   const tasks = ref<TaskItem[] | null>(null);
 
-  const { data, getTaskList, error, loading } = useGetTaskList();
+  const {
+    data,
+    execute: getTaskList,
+    error,
+    loading,
+  } = useAsync($services.tasks.getAll, { context: $services.tasks });
 
   async function fetchTaskList() {
     await getTaskList();
@@ -19,7 +25,7 @@ export const useTasksStore = defineStore("tasks", () => {
    * Создание задачи
    * @param task
    */
-  function createTask(task: Task) {
+  function createTask(task: CreateTaskResponse) {
     // TODO: createTask
   }
 

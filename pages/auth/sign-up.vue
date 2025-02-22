@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Form } from "vee-validate";
 import { string, ref as yupRef } from "yup";
-import { useSignUp } from "~/composables/api/useSignUp.api";
+import { useAsync } from "~/composables/useAsync";
 
 definePageMeta({
   layout: "auth",
@@ -9,14 +9,19 @@ definePageMeta({
   name: "sign-up",
 });
 
-const { error, loading, signUp } = useSignUp();
+const { $services } = useNuxtApp();
+const {
+  error,
+  loading,
+  execute: signUp,
+} = useAsync(() => $services.auth.register(username.value, password.value));
 const router = useRouter();
 
 const username = ref();
 const password = ref();
 
 async function onSubmit() {
-  await signUp({ username: username.value, password: password.value });
+  await signUp();
   if (!error.value) {
     router.push({ name: "auth", query: { username: username.value } });
   }

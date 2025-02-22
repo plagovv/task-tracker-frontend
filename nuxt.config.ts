@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   },
   appConfig: {
     appDomain: process.env.APP_DOMAIN,
-    ssl: process.env.APP_SSL === 'true',
+    ssl: process.env.APP_SSL === "true",
   },
   app: {
     head: {
@@ -31,7 +31,7 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "dayjs-nuxt",
   ],
-  plugins: ["~/plugins/axios"],
+  plugins: ["~/plugins/axios", "~/plugins/apiServices"],
   css: ["~/assets/css/main.css"],
   // Modules Settings
   postcss: {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TaskItem } from "~/types/api/tasksFactory.interface";
+import type { TaskItem } from "~/apiServices/TaskService";
 
 const { task } = defineProps<{ task: TaskItem }>();
 </script>
