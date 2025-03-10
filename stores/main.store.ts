@@ -6,6 +6,7 @@ export const useMainStore = defineStore("main", () => {
   const router = useRouter();
   // globalLoader
   const globalLoading = ref<boolean>(false);
+  const syncLoader = ref<boolean>(false);
   // token
   const token = useCookie<string | undefined>("token", {
     default: () => undefined,
@@ -71,6 +72,7 @@ export const useMainStore = defineStore("main", () => {
     token,
     refreshToken,
     globalLoading,
+    syncLoader,
     user,
     login,
     getMe,

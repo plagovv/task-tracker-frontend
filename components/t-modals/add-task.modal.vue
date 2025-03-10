@@ -32,7 +32,6 @@ function onCloseModal() {
 function createTask() {
   handleSubmit((values) => {
     console.log(values);
-    console.log(haveValues.value);
   })();
 }
 

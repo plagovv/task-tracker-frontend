@@ -4,7 +4,7 @@ import axios, {
   type InternalAxiosRequestConfig,
 } from "axios";
 import { defineNuxtPlugin } from "#app";
-import type { SignInRequest } from "~/types/api/signIn.interface";
+import type { SignInRequest } from "~/apiServices/AuthService";
 
 interface AxiosRequestConfigWithRetry extends InternalAxiosRequestConfig {
   _retry?: boolean;
@@ -42,7 +42,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       if (
         error.response?.status === 401 &&
         !originalRequest._retry &&
-        !originalRequest!.fetchOptions!.withoutRefresh
+        !originalRequest?.fetchOptions?.withoutRefresh
       ) {
         originalRequest._retry = true;
         try {

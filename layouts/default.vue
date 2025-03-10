@@ -18,6 +18,7 @@ useSeoMeta({
       <t-header />
       <NuxtPage />
     </t-modals-provider>
+    <t-sync-loader />
   </div>
 </template>
 
