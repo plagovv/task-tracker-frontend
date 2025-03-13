@@ -4,9 +4,9 @@ import { object, string, number } from "yup";
 import { toTypedSchema } from "@vee-validate/yup";
 
 const tasksStore = useTasksStore();
-const { open: openCreateModal, close: closeCreateModal } =
-  useModal("tasksModal");
-defineExpose({ openCreateModal });
+const { open: openCreateTaskModal, close: closeCreateModal } =
+  useModal("createTaskModal");
+defineExpose({ openCreateTaskModal });
 
 const { values, defineField, resetForm, handleSubmit } = useForm({
   initialValues: {
@@ -51,7 +51,7 @@ const haveValues = computed(() =>
 
 <template>
   <t-modal
-    ref="tasksModal"
+    ref="createTaskModal"
     :close-outside="!haveValues"
     title="Создать задачу"
     :loading="tasksStore.createTaskApiLoading"

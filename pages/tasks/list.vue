@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { useTasksStore } from "~/stores/tasks.store";
-import { ADD_MODAL_KEY } from "~/components/t-modals/modal-keys";
+import {
+  ADD_MODAL_KEY,
+  SHOW_TASK_MODAL_KEY,
+} from "~/components/t-modals/modal-keys";
 
 definePageMeta({
   title: "Задачи - Список",
@@ -9,6 +12,8 @@ definePageMeta({
 });
 
 const addModalOpenInjected = inject<() => void>(ADD_MODAL_KEY);
+const showTaskModalOpenInjected =
+  inject<(id: string) => void>(SHOW_TASK_MODAL_KEY);
 
 const tasksStore = useTasksStore();
 </script>
@@ -38,6 +43,11 @@ const tasksStore = useTasksStore();
         :key="task._id"
         :task="task"
         class="mb-3"
+        @click="
+          showTaskModalOpenInjected
+            ? showTaskModalOpenInjected(task._id)
+            : () => 0
+        "
       />
     </t-list>
   </div>
