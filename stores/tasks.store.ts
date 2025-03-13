@@ -7,26 +7,47 @@ import type {
 
 export const useTasksStore = defineStore("tasks", () => {
   const { $services } = useNuxtApp();
+  const mainState = useMainStore();
   const tasks = ref<TaskItem[] | null>(null);
 
   const {
-    data,
+    data: getTaskListData,
+    error: getTaskListError,
+    loading: getTaskListLoading,
     execute: getTaskList,
-    error,
-    loading,
-  } = useAsync($services.tasks.getAll, { context: $services.tasks });
+  } = useAsync($services.tasks.getAll, {
+    context: $services.tasks,
+  });
+
+  const {
+    data: createTaskApiData,
+    execute: createTaskApi,
+    error: createTaskApiError,
+    loading: createTaskApiLoading,
+  } = useAsync($services.tasks.createTask, { context: $services.tasks });
 
   async function fetchTaskList() {
-    await getTaskList();
-    tasks.value = data.value;
+    try {
+      mainState.syncLoader = true;
+      await getTaskList();
+      tasks.value = getTaskListData.value;
+    } finally {
+      mainState.syncLoader = false;
+    }
   }
 
   /**
    * Создание задачи
    * @param task
    */
-  function createTask(task: CreateTaskResponse) {
-    // TODO: createTask
+  async function createTask(task: CreateTaskResponse) {
+    try {
+      await createTaskApi(task);
+      fetchTaskList();
+    } catch {
+      // TODO: Notif error
+      console.log(createTaskApiError);
+    }
   }
 
   /**
@@ -52,7 +73,8 @@ export const useTasksStore = defineStore("tasks", () => {
     updateTask,
     deleteTask,
     tasks,
-    error,
-    loading,
+    getTaskListError,
+    getTaskListLoading,
+    createTaskApiLoading,
   };
 });

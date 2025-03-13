@@ -16,7 +16,6 @@ await useAsyncData("tasks", () => tasksStore.fetchTaskList().then(() => true));
   <div class="container mx-auto">
     <div class="flex items-center justify-between w-full">
       <h1 class="text-2xl font-bold">{{ route.meta.title }}</h1>
-
       <t-dropdown hide-on-click>
         <t-button pain rounded icon="material-symbols:more-horiz"></t-button>
         <template #content>
@@ -51,7 +50,6 @@ await useAsyncData("tasks", () => tasksStore.fetchTaskList().then(() => true));
         </template>
       </t-dropdown>
     </div>
-    <div v-if="tasksStore.loading">Loading</div>
     <NuxtPage />
   </div>
 </template>

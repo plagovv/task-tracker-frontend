@@ -2,7 +2,10 @@
 import { useForm } from "vee-validate";
 import { object, string, number } from "yup";
 import { toTypedSchema } from "@vee-validate/yup";
-const { open: openCreateModal } = useModal("tasksModal");
+
+const tasksStore = useTasksStore();
+const { open: openCreateModal, close: closeCreateModal } =
+  useModal("tasksModal");
 defineExpose({ openCreateModal });
 
 const { values, defineField, resetForm, handleSubmit } = useForm({
@@ -30,8 +33,12 @@ function onCloseModal() {
 }
 
 function createTask() {
-  handleSubmit((values) => {
-    console.log(values);
+  handleSubmit(async (values) => {
+    try {
+      await tasksStore.createTask(values);
+    } finally {
+      closeCreateModal();
+    }
   })();
 }
 
@@ -47,6 +54,7 @@ const haveValues = computed(() =>
     ref="tasksModal"
     :close-outside="!haveValues"
     title="Создать задачу"
+    :loading="tasksStore.createTaskApiLoading"
     @close="onCloseModal"
     @open="onOpenModal"
   >
@@ -61,10 +69,10 @@ const haveValues = computed(() =>
       />
       <t-select-priority v-model="priority" v-bind="priorityAttrs" />
     </div>
-    <template #actions="{ close }">
+    <template #actions="{ close, loading }">
       <div class="flex items-center justify-end w-full mx-4 my-3">
-        <t-button pain @click="close">Отмена</t-button>
-        <t-button @click="createTask">Создать</t-button>
+        <t-button pain :disabled="loading" @click="close">Отмена</t-button>
+        <t-button :disabled="loading" @click="createTask">Создать</t-button>
       </div>
     </template>
   </t-modal>

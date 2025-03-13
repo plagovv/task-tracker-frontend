@@ -9,7 +9,7 @@ const mainState = useMainStore();
         v-if="mainState.syncLoader"
         class="w-60 flex items-center justify-center rounded-t-md border border-b-0 border-gray-100/10 px-5 py-3 backdrop-blur-sm"
       >
-        <t-loader class="mr-2" />
+        <t-progress class="mr-2" />
         <span>Синхронизация...</span>
       </div>
     </transition>
