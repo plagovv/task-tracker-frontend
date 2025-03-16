@@ -10,7 +10,7 @@ const props = withDefaults(
     width: 25,
     height: 25,
     strokeWidth: 4,
-    color: "white",
+    color: "#a855f7",
   },
 );
 </script>

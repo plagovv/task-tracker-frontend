@@ -1,4 +1,5 @@
 import { BaseApiService } from "~/apiServices/BaseApiService";
+import type { AxiosRequestConfig } from "axios";
 type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
 export type StatusBasicType = "todo" | "process" | "done";
@@ -45,10 +46,14 @@ export class TaskService extends BaseApiService {
 
   /**
    * Get task by id
-   * @param id
+   * @param args
    */
-  async getTaskById(id: string): Promise<TaskItem> {
-    return this.handleRequest(this.http.get(`/tasks/${id}`));
+  async getTaskById(
+    ...args: [AxiosRequestConfig<never>, string] | [string]
+  ): Promise<TaskItem> {
+    if (typeof args[0] === "string")
+      return this.handleRequest(this.http.get(`/tasks/${args[0]}`));
+    else return this.handleRequest(this.http.get(`/tasks/${args[1]}`, args[0]));
   }
 
   /**

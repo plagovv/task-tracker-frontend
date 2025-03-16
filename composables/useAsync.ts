@@ -20,6 +20,7 @@ interface UseAsyncReturn<TResult, TError, TArgs extends unknown[]> {
   loading: Ref<boolean>;
   execute: (...args: TArgs) => Promise<TResult | null>;
   abort: () => void;
+  reset: () => void;
 }
 
 export const useAsync = <
@@ -89,11 +90,16 @@ export const useAsync = <
   //   execute(...([] as TArgs)).catch(() => {});
   // }
 
+  function reset() {
+    error.value = null;
+  }
+
   return {
     data,
     error,
     loading,
     execute,
     abort,
+    reset,
   };
 };

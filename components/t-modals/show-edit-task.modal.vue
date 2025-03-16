@@ -11,7 +11,7 @@ const taskId = ref<string>("");
 </script>
 
 <template>
-  <t-modal ref="taskShowEditModal">
+  <t-modal ref="taskShowEditModal" hide-title>
     <t-show-edit-task ref="taskShowEdit" :task-id="taskId" full-wide />
     <template #actions="{ close }">
       <div class="flex items-center justify-end w-full mx-4 my-3">

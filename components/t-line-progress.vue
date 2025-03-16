@@ -22,6 +22,7 @@ const protectedValue = computed(() => {
   }
   if (props.value < props.min) return props.min;
   if (props.value > props.max) return props.max;
+  return 0;
 });
 </script>
 

@@ -15,6 +15,10 @@ const addModalOpenInjected = inject<() => void>(ADD_MODAL_KEY);
 const showTaskModalOpenInjected =
   inject<(id: string) => void>(SHOW_TASK_MODAL_KEY);
 
+function openModalBrowse(taskId: string) {
+  if (showTaskModalOpenInjected) showTaskModalOpenInjected(taskId);
+}
+
 const tasksStore = useTasksStore();
 </script>
 
@@ -38,17 +42,21 @@ const tasksStore = useTasksStore();
       :title="`Задачи &#183; ${tasksStore.tasks?.length || 0}`"
       class="mt-10"
     >
-      <t-task-list-card
+      <nuxt-link
         v-for="task in tasksStore.tasks"
         :key="task._id"
-        :task="task"
-        class="mb-3"
-        @click="
-          showTaskModalOpenInjected
-            ? showTaskModalOpenInjected(task._id)
-            : () => 0
-        "
-      />
+        v-slot="{ href, target }"
+        :to="{ name: 'browse-id', params: { id: task._id } }"
+        custom
+      >
+        <a
+          :href="href"
+          :target="target"
+          @click.prevent="(e) => openModalBrowse(task._id)"
+        >
+          <t-task-list-card :task="task" class="mb-3" />
+        </a>
+      </nuxt-link>
     </t-list>
   </div>
 </template>
