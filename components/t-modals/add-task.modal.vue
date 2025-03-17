@@ -55,6 +55,7 @@ const haveValues = computed(() =>
     :close-outside="!haveValues"
     title="Создать задачу"
     :loading="tasksStore.createTaskApiLoading"
+    modal-class="lg:w-1/4 md:w-1/3 sm:w-1/2 w-full"
     @close="onCloseModal"
     @open="onOpenModal"
   >
