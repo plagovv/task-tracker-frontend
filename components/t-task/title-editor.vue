@@ -70,8 +70,8 @@ watch(
     :class="{
       'cursor-pointer': !active,
       'hover:border-slate-600': !active && !props.error,
-      'border-purple-600/75': active,
-      'border-red-600/75': error,
+      'active-input': active,
+      'error-input': error,
     }"
     @click="activate"
   >
@@ -108,4 +108,12 @@ watch(
   </h1>
 </template>
 
-<style scoped></style>
+<style lang="scss" scoped>
+// Исправление, при использовании класса border-purple-600/80 на прямую почему то это не работает ???вопрос открыт???
+.active-input {
+  @apply border-purple-600/80;
+}
+.error-input {
+  @apply border-red-600/75;
+}
+</style>
