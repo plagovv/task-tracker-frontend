@@ -88,18 +88,20 @@ defineExpose({ loadTask });
             @update-task="updateTask"
             @reset="saveTaskReset"
           />
-          <t-task-description-editor
-            v-model="getTaskData.description"
-            :loading="saveTaskLoading"
-            @update-task="updateTask"
-          />
+          <t-dropdown-container title="Описание">
+            <t-task-description-editor
+              v-model="getTaskData.description"
+              :loading="saveTaskLoading"
+              @update-task="updateTask"
+            />
+          </t-dropdown-container>
         </template>
         <!-- TODO: CREATE LOADING SKELETONS && ERROR -->
         <template #right>
-          <t-dropdown-container title="Основные поля">
+          <t-dropdown-container title="Основные поля" bordered>
             <div>придумать</div>
           </t-dropdown-container>
-          <t-dropdown-container title="Дополнительные поля">
+          <t-dropdown-container title="Дополнительные поля" bordered>
             <div>Здесь пока нет полей (в разработке)</div>
           </t-dropdown-container>
         </template>

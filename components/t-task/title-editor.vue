@@ -66,12 +66,12 @@ watch(
 <template>
   <h1
     ref="titleEditor"
-    class="text-xl font-semibold leading-tight border border-transparent rounded-lg p-1 relative group overflow-hidden"
+    class="text-xl font-semibold leading-tight border border-transparent rounded-lg p-1 relative group overflow-hidden mb-2"
     :class="{
       'cursor-pointer': !active,
       'hover:border-slate-600': !active && !props.error,
-      'active-input': active,
-      'error-input': error,
+      '!border-purple-600/80': active,
+      'border-red-600/75': error,
     }"
     @click="activate"
   >
@@ -110,10 +110,10 @@ watch(
 
 <style lang="scss" scoped>
 // Исправление, при использовании класса border-purple-600/80 на прямую почему то это не работает ???вопрос открыт???
-.active-input {
+/*.active-input {
   @apply border-purple-600/80;
 }
 .error-input {
   @apply border-red-600/75;
-}
+}*/
 </style>

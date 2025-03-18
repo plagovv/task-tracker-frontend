@@ -23,4 +23,11 @@ export default {
     },
   },
   plugins: [],
+  purge: {
+    safelist: [
+      // title-editor.vue
+      "border-purple-600/80",
+      "border-red-600/75",
+    ],
+  },
 };
