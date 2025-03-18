@@ -71,7 +71,7 @@ watch(
       'cursor-pointer': !active,
       'hover:border-slate-600': !active && !props.error,
       '!border-purple-600/80': active,
-      'border-red-600/75': error,
+      '!border-red-600/75': error,
     }"
     @click="activate"
   >

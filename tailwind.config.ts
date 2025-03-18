@@ -7,6 +7,10 @@ export default {
     "./plugins/**/*.{js,ts}",
     "./app.vue",
     // "./error.vue",
+
+    // title-editor.vue
+    "border-purple-600/80",
+    "border-red-600/75",
   ],
   theme: {
     extend: {
@@ -23,11 +27,4 @@ export default {
     },
   },
   plugins: [],
-  purge: {
-    safelist: [
-      // title-editor.vue
-      "border-purple-600/80",
-      "border-red-600/75",
-    ],
-  },
 };
