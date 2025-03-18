@@ -30,6 +30,8 @@ export default defineNuxtConfig({
     "nuxt-icon-tw",
     "@pinia/nuxt",
     "dayjs-nuxt",
+    "nuxt-tiptap-editor",
+    "nuxt-tiptap-editor",
   ],
   plugins: ["~/plugins/axios", "~/plugins/apiServices"],
   css: ["~/assets/css/main.css"],
@@ -70,5 +72,8 @@ export default defineNuxtConfig({
         },
       },
     },
+  },
+  tiptap: {
+    prefix: "Tiptap", //prefix for Tiptap imports, composables not included
   },
 });

@@ -92,7 +92,9 @@ defineExpose({ loadTask });
             <t-task-description-editor
               v-model="getTaskData.description"
               :loading="saveTaskLoading"
+              :error="!!saveTaskError"
               @update-task="updateTask"
+              @reset="saveTaskReset"
             />
           </t-dropdown-container>
         </template>

@@ -1,14 +1,24 @@
 <script setup lang="ts">
 defineEmits(["click"]);
-const props = defineProps({
-  size: {}, // TODO: Сделать размер кнопок, пока доступен только md
-  disabled: { type: Boolean, default: false },
-  loading: { type: Boolean, default: false },
-  outline: { type: Boolean, default: false },
-  rounded: { type: Boolean, default: false },
-  pain: { type: Boolean, default: false },
-  icon: { type: String, default: undefined },
-});
+const props = withDefaults(
+  defineProps<{
+    size: "sm" | "md" | "lg";
+    disabled: boolean;
+    loading: boolean;
+    outline: boolean;
+    rounded: boolean;
+    pain: boolean;
+    icon?: string;
+  }>(),
+  {
+    size: "md",
+    disabled: false,
+    loading: false,
+    outline: false,
+    rounded: false,
+    pain: false,
+  },
+);
 
 const baseClass = computed(() => {
   if (props.outline) {
@@ -20,6 +30,26 @@ const baseClass = computed(() => {
   }
 
   return "bg-purple-500 border-purple-500";
+});
+
+const iconSize = computed<string>(() => {
+  if (props.size === "sm") {
+    return "0.90rem";
+  } else if (props.size === "lg") {
+    return "2rem";
+  } else {
+    return "1.5rem";
+  }
+});
+
+const btnSize = computed(() => {
+  if (props.size === "sm") {
+    return "px-3 py-1.5 text-sm";
+  } else if (props.size === "lg") {
+    return "px-5 py-3.5 text-lg";
+  } else {
+    return "px-4 py-2.5";
+  }
 });
 </script>
 
@@ -41,8 +71,9 @@ const baseClass = computed(() => {
         '!p-2': rounded && icon,
       },
       baseClass,
+      btnSize,
     ]"
-    class="select-none px-4 py-2.5 font-semibold text-center border text-white text-sm leading-none rounded-md transition-all ease-in-out duration-150"
+    class="select-none font-semibold text-center border text-white text-sm leading-none rounded-md transition-all ease-in-out duration-150"
     @click="$emit('click')"
   >
     <template v-if="loading">
@@ -69,7 +100,7 @@ const baseClass = computed(() => {
       Загрузка...
     </template>
     <template v-else-if="icon">
-      <Icon :icon="icon" size="1.5rem" />
+      <Icon :icon="icon" :size="iconSize" />
     </template>
     <slot v-else />
   </button>

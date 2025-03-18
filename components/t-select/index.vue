@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { getRandString } from "~/utils";
 import { watch } from "vue";
-import type { DefaultSelectItem } from "~/components/t-select/t-select";
+import type { DefaultSelectItem } from "~/components/t-select/t-select.type";
 import useClickOutside from "~/composables/useClickOutside";
 
 const {

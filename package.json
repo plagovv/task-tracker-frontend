@@ -25,6 +25,7 @@
     "lodash": "^4.17.21",
     "nuxt": "^3.13.0",
     "nuxt-icon-tw": "^1.0.0",
+    "nuxt-tiptap-editor": "2.1.4",
     "vue": "latest",
     "vue-component-type-helpers": "^2.1.10",
     "vue-router": "latest",
