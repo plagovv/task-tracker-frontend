@@ -11,16 +11,33 @@ if (props.closed) {
 }
 
 const dropdownEl = ref<null | HTMLDivElement>(null);
+const animate = ref<boolean>(false);
+
 onMounted(() => {
   watch(
     () => show.value,
     (val) => {
       const el = dropdownEl.value;
-      if (el) el.style.height = `${val ? el.scrollHeight : 0}px`;
+      if (!animate.value) {
+        animate.value = true;
+      }
+      nextTick(() => {
+        if (el) el.style.height = `${val ? el.scrollHeight : 0}px`;
+      });
     },
     { immediate: true },
   );
 });
+
+const updateHeight = () => {
+  if (animate.value) {
+    animate.value = false;
+  }
+  const el = dropdownEl.value;
+  nextTick(() => {
+    if (el) el.style.height = `${el.scrollHeight}px`;
+  });
+};
 </script>
 
 <template>
@@ -51,7 +68,7 @@ onMounted(() => {
             size="18"
             class="origin-center rotate-90 duration-300 ease-in-out"
             :class="{
-              '!rotate-180': !show,
+              '!rotate-180': show,
             }"
           />
         </div>
@@ -59,10 +76,11 @@ onMounted(() => {
       </div>
       <div
         ref="dropdownEl"
-        class="overflow-hidden duration-300 ease-in-out w-full"
+        class="overflow-hidden ease-in-out w-full"
+        :class="{ 'duration-300': animate }"
       >
         <div class="py-1 px-2">
-          <slot />
+          <slot :update="updateHeight" />
         </div>
       </div>
     </div>

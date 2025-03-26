@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+import tailwindTypography from "@tailwindcss/typography";
 export default {
   content: [
     "./components/**/*.{js,vue,ts}",
@@ -26,5 +27,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [tailwindTypography],
 };

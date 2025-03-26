@@ -89,13 +89,16 @@ defineExpose({ loadTask });
             @reset="saveTaskReset"
           />
           <t-dropdown-container title="Описание">
-            <t-task-description-editor
-              v-model="getTaskData.description"
-              :loading="saveTaskLoading"
-              :error="!!saveTaskError"
-              @update-task="updateTask"
-              @reset="saveTaskReset"
-            />
+            <template #default="{ update: updateHeight }">
+              <t-task-description-editor
+                :value="getTaskData.description"
+                :loading="saveTaskLoading"
+                :error="!!saveTaskError"
+                :update-height="updateHeight"
+                @update-task="updateTask"
+                @reset="saveTaskReset"
+              />
+            </template>
           </t-dropdown-container>
         </template>
         <!-- TODO: CREATE LOADING SKELETONS && ERROR -->

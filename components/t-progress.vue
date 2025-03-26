@@ -1,25 +1,43 @@
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
-    width?: number;
-    height?: number;
+    size?: number | string;
+    width?: number | string;
+    height?: number | string;
     color?: string;
-    strokeWidth?: number;
+    strokeWidth?: number | string;
   }>(),
   {
+    size: 25,
     width: 25,
     height: 25,
     strokeWidth: 4,
     color: "#a855f7",
   },
 );
+
+const computedWith = computed(() => {
+  if (props.size) {
+    return props.size;
+  } else {
+    return props.width;
+  }
+});
+
+const computedHeigth = computed(() => {
+  if (props.size) {
+    return props.size;
+  } else {
+    return props.height;
+  }
+});
 </script>
 
 <template>
   <svg
     class="spinner"
-    :width="props.width + 'px'"
-    :height="props.height + 'px'"
+    :width="computedWith + 'px'"
+    :height="computedHeigth + 'px'"
     viewBox="0 0 66 66"
     xmlns="http://www.w3.org/2000/svg"
   >

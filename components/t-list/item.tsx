@@ -1,8 +1,8 @@
-import type { SetupContext, SlotsType } from "vue";
+import type { HTMLAttributes, SetupContext, SlotsType } from "vue";
 import { NuxtLink } from "#components";
 import type { RouteLocationRaw, RouterLinkProps } from "#vue-router";
 
-interface ListItemProps extends Omit<RouterLinkProps, "to"> {
+interface ListItemProps extends Omit<RouterLinkProps, "to">, HTMLAttributes {
   to?: RouteLocationRaw;
   onClick?: () => void;
 }

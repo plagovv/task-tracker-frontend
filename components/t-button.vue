@@ -1,14 +1,18 @@
 <script setup lang="ts">
+defineOptions({
+  name: "TButton",
+});
 defineEmits(["click"]);
 const props = withDefaults(
   defineProps<{
-    size: "sm" | "md" | "lg";
-    disabled: boolean;
-    loading: boolean;
-    outline: boolean;
-    rounded: boolean;
-    pain: boolean;
+    size?: "sm" | "md" | "lg";
+    disabled?: boolean;
+    loading?: boolean;
+    outline?: boolean;
+    rounded?: boolean;
+    pain?: boolean;
     icon?: string;
+    active?: boolean;
   }>(),
   {
     size: "md",
@@ -17,6 +21,7 @@ const props = withDefaults(
     outline: false,
     rounded: false,
     pain: false,
+    active: false,
   },
 );
 
@@ -59,16 +64,17 @@ const btnSize = computed(() => {
     :disabled="props.disabled"
     :class="[
       {
-        'opacity-50': disabled,
+        '!opacity-50': disabled,
         'cursor-not-allowed': disabled || loading,
         'hover:bg-purple-600 hover:border-purple-600 hover:shadow-lg hover:shadow-purple-500/15 hover:duration-250':
           !disabled && !loading && !outline && !pain,
         'hover:text-white hover:opacity-100 hover:duration-250':
           !disabled && !loading && outline,
-        'hover:text-white active:bg-purple-600/10 hover:opacity-100 hover:duration-150':
+        'hover:text-white active:bg-purple-600/10 hover:opacity-100 hover:duration-150 ':
           !disabled && !loading && pain,
         '!rounded-full': rounded,
         '!p-2': rounded && icon,
+        'bg-purple-600/40': active,
       },
       baseClass,
       btnSize,
