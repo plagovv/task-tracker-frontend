@@ -77,11 +77,7 @@ const addModalOpenInjected = inject<() => void>(ADD_MODAL_KEY);
         <t-button rounded class="mr-2"> Мои задачи </t-button>
       </NuxtLink>
       <t-dropdown>
-        <t-avatar
-          rounded
-          size="lg"
-          src="https://img.freepik.com/premium-photo/graphic-designer-digital-avatar-generative-ai_934475-9292.jpg?w=50"
-        />
+        <t-avatar rounded size="lg" />
         <template #content>
           <t-card class="w-72">
             <t-list>

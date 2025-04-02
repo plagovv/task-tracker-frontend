@@ -31,7 +31,7 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "dayjs-nuxt",
     "nuxt-tiptap-editor",
-    "nuxt-tiptap-editor",
+    "@vueuse/nuxt",
   ],
   plugins: ["~/plugins/axios", "~/plugins/apiServices"],
   css: ["~/assets/css/main.css"],

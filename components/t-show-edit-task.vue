@@ -79,7 +79,12 @@ defineExpose({ loadTask });
 <template>
   <t-loading-container v-if="started" :loading="getTaskLoading">
     <t-container>
-      <t-splitted-container>
+      <t-splitted-container
+        left-min-percent="40"
+        right-min-percent="30"
+        right-default-percent="20"
+        save-tag="taskRatio"
+      >
         <template v-if="getTaskData && !getTaskError" #left>
           <t-task-title-editor
             :value="getTaskData.title"
