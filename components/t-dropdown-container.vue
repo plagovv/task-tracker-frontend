@@ -45,7 +45,7 @@ const updateHeight = () => {
     <div
       class="duration-100"
       :class="{
-        'divide-y divide-slate-700': props.bordered,
+        'divide-y divide-slate-200/20': props.bordered,
         'divide-none': !show,
       }"
     >
@@ -76,12 +76,10 @@ const updateHeight = () => {
       </div>
       <div
         ref="dropdownEl"
-        class="overflow-hidden ease-in-out w-full"
+        class="overflow-hidden ease-in-out w-full p-[1px]"
         :class="{ 'duration-300': animate }"
       >
-        <div class="py-1 px-2">
-          <slot :update="updateHeight" />
-        </div>
+        <slot :update="updateHeight" />
       </div>
     </div>
   </t-card>

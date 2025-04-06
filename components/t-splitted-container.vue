@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import useResize from "~/composables/useResize";
+
 const props = withDefaults(
   defineProps<{
     leftMinPercent?: number | string;
@@ -61,6 +63,22 @@ function saveLocalValues() {
     JSON.stringify({ left: leftWidth.value, right: rightWidth.value }),
   );
 }
+function setBoundingClientRect() {
+  const rect = containerRef.value?.getBoundingClientRect();
+  if (rect) {
+    clientRect.value = rect;
+  }
+}
+
+function mousemove(e: MouseEvent) {
+  if (active.value && clientRect.value) {
+    leftWidth.value = getPercentageRatio(
+      e.clientX - clientRect.value.x,
+      clientRect.value.width,
+    );
+    rightWidth.value = 100 - leftWidth.value;
+  }
+}
 
 const leftMinPerc = computed(() =>
   protectPercentValue(Number(props.leftMinPercent)),
@@ -89,22 +107,10 @@ onMounted(() => {
   if (props.saveTag) {
     initLocalValues();
   }
-  const rect = containerRef.value?.getBoundingClientRect();
-  if (rect) {
-    clientRect.value = rect;
-  }
+  setBoundingClientRect();
 });
-//  TODO: Сделать перерасчет смещения
-function onresize() {}
-function mousemove(e: MouseEvent) {
-  if (active.value && clientRect.value) {
-    leftWidth.value = getPercentageRatio(
-      e.clientX - clientRect.value.x,
-      clientRect.value.width,
-    );
-    rightWidth.value = 100 - leftWidth.value;
-  }
-}
+
+useResize(setBoundingClientRect);
 
 onBeforeUnmount(() => {
   if (props.saveTag) {
@@ -116,11 +122,9 @@ onBeforeUnmount(() => {
 <template>
   <div
     ref="target"
+    v-touch:drag="mousemove"
     class="flex align-center w-full relative"
     :class="{ 'select-none': active }"
-    @mousemove="mousemove"
-    @mouseup="active = false"
-    @mouseleave="active = false"
   >
     <div
       class="left"
@@ -133,8 +137,10 @@ onBeforeUnmount(() => {
       <slot name="left" />
     </div>
     <div
-      class="bg-purple-200 hover:bg-purple-600 w-0.5 min-h-full transition-all ease-in-out duration-150 cursor-ew-resize after:block after:min-h-full after:-translate-x-[5px] after:border-green-400 after:w-3"
-      @mousedown="active = true"
+      v-touch:press="() => (active = true)"
+      v-touch:release="() => (active = false)"
+      class="relative resize-before mx-2 bg-slate-200/20 hover:bg-purple-600 w-[1px] min-h-full transition-all ease-in-out duration-150 cursor-ew-resize after:block after:min-h-full after:-translate-x-[5px] after:border-green-400 after:w-3"
+      :class="{ '!bg-purple-600': active }"
     ></div>
     <div
       class="right"
@@ -149,4 +155,21 @@ onBeforeUnmount(() => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.resize-before::before {
+  @apply bg-slate-200/20;
+  position: absolute;
+  top: calc(50% - 0.5rem);
+  left: -0.2rem;
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M12 16a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2a2 2 0 0 1 2-2m0-6a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2a2 2 0 0 1 2-2m0-6a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2a2 2 0 0 1 2-2'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--svg);
+  mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+</style>

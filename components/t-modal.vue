@@ -58,7 +58,7 @@ defineExpose({
           indeterminate
           class="absolute left-0 right-0"
         />
-        <div class="divide-y divide-slate-700">
+        <div class="divide-y divide-slate-200/20">
           <div v-if="!hideTitle" class="mx-4 my-3">
             <slot v-if="typeof slots?.title === 'function'" name="title" />
             <span v-else class="font-bold text-xl"> {{ props.title }} </span>

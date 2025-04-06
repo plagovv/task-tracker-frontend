@@ -33,7 +33,11 @@ export default defineNuxtConfig({
     "nuxt-tiptap-editor",
     "@vueuse/nuxt",
   ],
-  plugins: ["~/plugins/axios", "~/plugins/apiServices"],
+  plugins: [
+    "~/plugins/axios",
+    "~/plugins/apiServices",
+    "~/plugins/touchEvents",
+  ],
   css: ["~/assets/css/main.css"],
   // Modules Settings
   postcss: {
