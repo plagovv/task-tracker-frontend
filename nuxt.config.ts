@@ -34,9 +34,9 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
   ],
   plugins: [
-    "~/plugins/axios",
-    "~/plugins/apiServices",
-    "~/plugins/touchEvents",
+    "~/plugins/axios.plugin",
+    "~/plugins/apiServices.plugin",
+    "~/plugins/touchEvents.plugin",
   ],
   css: ["~/assets/css/main.css"],
   // Modules Settings

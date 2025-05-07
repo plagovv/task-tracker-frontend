@@ -5,7 +5,7 @@ export default {
     "./components/**/*.{js,vue,ts}",
     "./layouts/**/*.vue",
     "./pages/**/*.vue",
-    "./plugins/**/*.{js,ts}",
+    "./plugins/**/*.plugin.{js,ts}",
     "./app.vue",
     // "./error.vue",
 
@@ -24,6 +24,12 @@ export default {
         serif: ["Inter"],
         mono: ["Inter"],
         display: ["Inter"],
+      },
+      fontSize: {
+        "min-side": "0.6rem",
+      },
+      lineHeight: {
+        "min-side": "0.8rem",
       },
     },
   },

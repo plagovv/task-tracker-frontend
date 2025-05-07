@@ -1,12 +1,18 @@
 <script setup lang="ts">
 import { TDropdown } from "#components";
-import { ADD_MODAL_KEY } from "~/components/t-modals/modal-keys";
+import { ADD_TASK_MODAL_KEY } from "~/components/t-modals/modal-keys";
 
 const mainState = useMainStore();
 const route = useRoute();
+
+const emits = defineEmits(["toggleDrawer"]);
+
 const inTasks = computed(
   () => route.name === "tasks" || route.name === "tasks-list",
 );
+const inMainPage = computed(() => route.name === "index");
+
+/* Welcome logic */
 const dayjs = useDayjs();
 
 const welcome = computed(() => {
@@ -30,20 +36,23 @@ const welcome = computed(() => {
 
   return `err: ${hour}`;
 });
-
-const addModalOpenInjected = inject<() => void>(ADD_MODAL_KEY);
+/* Modal Inject */
+const addModalOpenInjected = inject<() => void>(ADD_TASK_MODAL_KEY);
 </script>
 
 <template>
-  <header class="w-100 flex items-center justify-between h-16 px-4 select-none">
+  <header
+    class="w-100 flex items-center justify-between h-16 px-4 select-none fixed left-0 right-0 top-0 z-30 bg-slate-50 dark:bg-slate-900 dark:text-gray-200"
+  >
     <!-- логотип -->
     <div class="flex-1 flex items-center">
       <t-button
-        v-if="inTasks"
+        v-if="!inMainPage"
         rounded
         pain
         class="mr-2"
         icon="material-symbols:menu-rounded"
+        @click="emits('toggleDrawer')"
       />
       <NuxtLink href="/" class="cursor-pointer">
         <img

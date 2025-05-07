@@ -46,7 +46,7 @@ defineExpose({
   <transition name="fade">
     <div
       v-if="isShow"
-      class="absolute left-0 top-0 w-full h-full flex items-center justify-center"
+      class="absolute left-0 top-0 w-full h-full flex items-center justify-center z-[500]"
     >
       <div
         class="fixed inset-0 bg-gray-500/75 dark:bg-gray-900/50 transition-opacity"

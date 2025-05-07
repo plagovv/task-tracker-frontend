@@ -15,12 +15,10 @@ useSeoMeta({
   <div class="layout-default">
     <NuxtLoadingIndicator style="height: 1px" color="#a855f7" />
     <t-modals-provider>
-      <t-header />
-      <NuxtPage />
+      <t-app>
+        <NuxtPage />
+      </t-app>
     </t-modals-provider>
-    <client-only>
-      <t-sync-loader />
-    </client-only>
   </div>
 </template>
 

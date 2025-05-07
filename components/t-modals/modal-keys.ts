@@ -1,2 +1,3 @@
-export const ADD_MODAL_KEY = Symbol("ADD_MODAL_KEY");
+export const ADD_TASK_MODAL_KEY = Symbol("ADD_TASK_MODAL_KEY");
 export const SHOW_TASK_MODAL_KEY = Symbol("SHOW_TASK_MODAL_KEY");
+export const ADD_PROJECT_MODAL_KEY = Symbol("ADD_PROJECT_MODAL_KEY");

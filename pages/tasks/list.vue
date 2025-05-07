@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useTasksStore } from "~/stores/tasks.store";
 import {
-  ADD_MODAL_KEY,
+  ADD_TASK_MODAL_KEY,
   SHOW_TASK_MODAL_KEY,
 } from "~/components/t-modals/modal-keys";
 
@@ -11,7 +11,7 @@ definePageMeta({
   middleware: ["auth-protect"],
 });
 
-const addModalOpenInjected = inject<() => void>(ADD_MODAL_KEY);
+const addModalOpenInjected = inject<() => void>(ADD_TASK_MODAL_KEY);
 const showTaskModalOpenInjected =
   inject<(id: string) => void>(SHOW_TASK_MODAL_KEY);
 
@@ -26,14 +26,14 @@ const tasksStore = useTasksStore();
   <div class="w-full mt-20">
     <div></div>
     <t-card
-      class="flex items-center p-2 hover:bg-slate-800/20 cursor-pointer"
+      class="flex items-center p-2 hover:bg-slate-800/20 cursor-pointer group"
       @click="addModalOpenInjected"
     >
       <t-button
         outline
         rounded
         icon="material-symbols:add-rounded"
-        class="mr-2"
+        class="mr-2 group-hover:opacity-100"
       />
       Добавить задачу
     </t-card>
